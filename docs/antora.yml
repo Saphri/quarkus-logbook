@@ -1,0 +1,5 @@
+name: quarkus-logbook
+title: logbook
+version: dev
+nav:
+  - modules/ROOT/nav.adoc
