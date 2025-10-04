@@ -18,7 +18,7 @@
       "settings": {
         "java.test.config": {
           "vmArgs": [
-            "-Djava.util.logging.manager=org.jboss.logmanager.LogManager",
+            "-Djava.util.logging.manager=org.jboss.logmanager.LogManager"
           ]
         }
       },
