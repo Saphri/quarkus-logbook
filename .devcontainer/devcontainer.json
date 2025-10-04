@@ -3,8 +3,8 @@
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
-      "version": "17",
-      //"jdkDistro": "mandrel",
+      "version": "22.3.5.r17",
+      "jdkDistro": "mandrel",
       "installMaven": "true"
     },
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
