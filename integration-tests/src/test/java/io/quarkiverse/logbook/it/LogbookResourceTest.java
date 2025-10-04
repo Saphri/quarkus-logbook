@@ -18,4 +18,20 @@ public class LogbookResourceTest {
                 .statusCode(200)
                 .body(is("Hello logbook"));
     }
+
+    @Test
+    void testBadRequest() {
+        given()
+                .when().get("/logbook/bad-request")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    void testError() {
+        given()
+                .when().get("/logbook/error")
+                .then()
+                .statusCode(500);
+    }
 }
