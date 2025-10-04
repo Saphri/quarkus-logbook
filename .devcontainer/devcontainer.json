@@ -7,7 +7,6 @@
       "jdkDistro": "mandrel",
       "installMaven": "true"
     },
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/devcontainers-extra/features/quarkus-sdkman:2": {
       "jdkVersion": "none"
@@ -26,7 +25,6 @@
       "extensions": [
         "vscjava.vscode-java-pack",
         "redhat.vscode-quarkus",
-        "ms-azuretools.vscode-containers",
         "humao.rest-client",
         "sonarsource.sonarlint-vscode",
         "redhat.vscode-xml",
