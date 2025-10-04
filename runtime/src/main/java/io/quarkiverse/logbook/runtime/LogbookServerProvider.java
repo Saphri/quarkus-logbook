@@ -4,7 +4,6 @@ import static org.zalando.logbook.core.Conditions.exclude;
 import static org.zalando.logbook.core.Conditions.requestTo;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import org.zalando.logbook.Logbook;
 import org.zalando.logbook.core.PathFilters;
@@ -15,8 +14,11 @@ import io.quarkus.arc.DefaultBean;
 
 public class LogbookServerProvider {
 
-    @Inject
-    LogbookConfiguration configuration;
+    private final LogbookConfiguration configuration;
+
+    public LogbookServerProvider(LogbookConfiguration configuration) {
+        this.configuration = configuration;
+    }
 
     @ApplicationScoped
     @DefaultBean
