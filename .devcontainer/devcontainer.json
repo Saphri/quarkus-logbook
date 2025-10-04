@@ -1,6 +1,6 @@
 {
   "name": "Java",
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
       "version": "22.3.5.r17",
@@ -16,6 +16,7 @@
   "customizations": {
     "vscode": {
       "settings": {
+        "java.compile.nullAnalysis.mode": "automatic",
         "java.test.config": {
           "vmArgs": [
             "-Djava.util.logging.manager=org.jboss.logmanager.LogManager"
