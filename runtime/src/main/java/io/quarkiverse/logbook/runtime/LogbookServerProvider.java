@@ -6,18 +6,18 @@ import static org.zalando.logbook.core.Conditions.requestTo;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import org.zalando.logbook.Logbook;
+import org.zalando.logbook.Strategy;
 import org.zalando.logbook.core.PathFilters;
 import org.zalando.logbook.core.QueryFilters;
 
-import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkus.arc.DefaultBean;
 
 public class LogbookServerProvider {
 
-    private final LogbookConfiguration configuration;
+    private final Strategy strategy;
 
-    public LogbookServerProvider(LogbookConfiguration configuration) {
-        this.configuration = configuration;
+    public LogbookServerProvider(final Strategy strategy) {
+        this.strategy = strategy;
     }
 
     @ApplicationScoped
@@ -29,7 +29,7 @@ public class LogbookServerProvider {
                 .pathFilter(PathFilters.replace("/hello/json/{fff}", "XXX"))
                 .queryFilter(QueryFilters.defaultValue())
                 .queryFilter(QueryFilters.replaceQuery("secret", "XXX"))
-                .strategy(configuration.strategy())
+                .strategy(strategy)
                 .build();
     }
 }
