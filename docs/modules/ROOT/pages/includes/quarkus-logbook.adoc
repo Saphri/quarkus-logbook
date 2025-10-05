@@ -7,7 +7,47 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-3+|No configuration properties found.
+a| [[quarkus-logbook_quarkus-logbook-strategy-name]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-strategy-name[`quarkus.logbook.strategy.name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.strategy.name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The strategy to use for logging requests and responses. Valid values are: - default: Log everything (default) - without-body: Log everything except bodies - status-at-least: Log only if status >= minimum-status (default 400) - body-only-if-status-at-least: Log request without body, then log both request and response with bodies only if status >= minimum-status (default 400)
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_STRATEGY_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_STRATEGY_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-logbook_quarkus-logbook-strategy-minimum-status]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-strategy-minimum-status[`quarkus.logbook.strategy.minimum-status`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.strategy.minimum-status+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The minimum status code to use with the "status-at-least" and "body-only-if-status-at-least" strategies. Default is 400.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_STRATEGY_MINIMUM_STATUS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_STRATEGY_MINIMUM_STATUS+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|
 
 |===
 
