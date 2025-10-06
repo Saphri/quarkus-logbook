@@ -7,9 +7,9 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a| [[quarkus-logbook_quarkus-logbook-strategy-name]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-strategy-name[`quarkus.logbook.strategy.name`]##
+a| [[quarkus-logbook_quarkus-logbook-strategy]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-strategy[`quarkus.logbook.strategy`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.logbook.strategy.name+++[]
+config_property_copy_button:+++quarkus.logbook.strategy+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -19,35 +19,98 @@ The strategy to use for logging requests and responses. Valid values are: - defa
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_STRATEGY_NAME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_STRATEGY+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_LOGBOOK_STRATEGY_NAME+++`
+Environment variable: `+++QUARKUS_LOGBOOK_STRATEGY+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|
+|`+++default+++`
 
-a| [[quarkus-logbook_quarkus-logbook-strategy-minimum-status]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-strategy-minimum-status[`quarkus.logbook.strategy.minimum-status`]##
+a| [[quarkus-logbook_quarkus-logbook-write-chunk-size]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-write-chunk-size[`quarkus.logbook.write.chunk-size`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.logbook.strategy.minimum-status+++[]
+config_property_copy_button:+++quarkus.logbook.write.chunk-size+++[]
 endif::add-copy-button-to-config-props[]
 
 
 [.description]
 --
-The minimum status code to use with the "status-at-least" and "body-only-if-status-at-least" strategies. Default is 400.
+Splits log lines into smaller chunks of size up-to chunk-size. Default is 0, which means no chunking.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_STRATEGY_MINIMUM_STATUS+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_WRITE_CHUNK_SIZE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_LOGBOOK_STRATEGY_MINIMUM_STATUS+++`
+Environment variable: `+++QUARKUS_LOGBOOK_WRITE_CHUNK_SIZE+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|
+|`+++0+++`
+
+a| [[quarkus-logbook_quarkus-logbook-write-max-body-size]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-write-max-body-size[`quarkus.logbook.write.max-body-size`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.write.max-body-size+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Truncates the body up to max-body-size characters and appends .... Default is -1, which means no truncation.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_WRITE_MAX_BODY_SIZE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_WRITE_MAX_BODY_SIZE+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++-1+++`
+
+a| [[quarkus-logbook_quarkus-logbook-format-style]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-format-style[`quarkus.logbook.format.style`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.format.style+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The style to use for formatting the log messages. Valid values are: - json: JSON format (default) - curl: cURL format - http: HTTP format - splunk: Splunk format
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_FORMAT_STYLE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_FORMAT_STYLE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++json+++`
+
+a| [[quarkus-logbook_quarkus-logbook-minimum-status]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-minimum-status[`quarkus.logbook.minimum-status`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.minimum-status+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Minimum status to enable logging (status-at-least and body-only-if-status-at-least). Default is 400.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_MINIMUM_STATUS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_MINIMUM_STATUS+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++400+++`
 
 |===
 

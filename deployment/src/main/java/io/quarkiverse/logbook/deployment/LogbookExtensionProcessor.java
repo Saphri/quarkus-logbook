@@ -1,7 +1,8 @@
 package io.quarkiverse.logbook.deployment;
 
 import io.quarkiverse.logbook.runtime.LogbookServerProvider;
-import io.quarkiverse.logbook.runtime.StrategyProvider;
+import io.quarkiverse.logbook.runtime.providers.HttpLogFormatterProvider;
+import io.quarkiverse.logbook.runtime.providers.StrategyProvider;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.AdditionalIndexedClassesBuildItem;
@@ -36,6 +37,6 @@ class LogbookExtensionProcessor {
 
     @BuildStep
     public AdditionalBeanBuildItem producer() {
-        return new AdditionalBeanBuildItem(StrategyProvider.class, LogbookServerProvider.class);
+        return new AdditionalBeanBuildItem(HttpLogFormatterProvider.class, StrategyProvider.class, LogbookServerProvider.class);
     }
 }
