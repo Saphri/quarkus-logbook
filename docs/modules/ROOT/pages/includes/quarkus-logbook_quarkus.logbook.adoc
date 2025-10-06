@@ -131,7 +131,7 @@ Environment variable: `+++QUARKUS_LOGBOOK_OBFUSCATE_JSON_BODY_FIELDS+++`
 endif::add-copy-button-to-env-var[]
 --
 |list of string
-|required icon:exclamation-circle[title=Configuration property is required]
+|
 
 a| [[quarkus-logbook_quarkus-logbook-obfuscate-parameters]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-obfuscate-parameters[`quarkus.logbook.obfuscate.parameters`]##
 ifdef::add-copy-button-to-config-props[]
@@ -173,7 +173,7 @@ Environment variable: `+++QUARKUS_LOGBOOK_OBFUSCATE_PATHS+++`
 endif::add-copy-button-to-env-var[]
 --
 |list of string
-|required icon:exclamation-circle[title=Configuration property is required]
+|
 
 a| [[quarkus-logbook_quarkus-logbook-obfuscate-replacement]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-obfuscate-replacement[`quarkus.logbook.obfuscate.replacement`]##
 ifdef::add-copy-button-to-config-props[]
