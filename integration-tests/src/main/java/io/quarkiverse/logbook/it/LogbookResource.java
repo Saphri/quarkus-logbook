@@ -1,19 +1,3 @@
-/*
-* Licensed to the Apache Software Foundation (ASF) under one or more
-* contributor license agreements.  See the NOTICE file distributed with
-* this work for additional information regarding copyright ownership.
-* The ASF licenses this file to You under the Apache License, Version 2.0
-* (the "License"); you may not use this file except in compliance with
-* the License.  You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
 package io.quarkiverse.logbook.it;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -24,14 +8,24 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.jboss.logging.Logger;
+
 @Path("/logbook")
 @ApplicationScoped
 public class LogbookResource {
-    // add some rest methods here
+    private final Logger log = Logger.getLogger(LogbookResource.class);
+
+    private final HelloClient helloClient;
+
+    public LogbookResource(@RestClient HelloClient helloClient) {
+        this.helloClient = helloClient;
+    }
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
+        log.info("hello invoked");
         return "Hello logbook";
     }
 
@@ -45,5 +39,14 @@ public class LogbookResource {
     @Path("/bad-request")
     public void badRequest() {
         throw new BadRequestException("bad boy", new IllegalArgumentException("bad argument"));
+    }
+
+    @GET
+    @Path("/client")
+    public String client() {
+        log.info("client invoked");
+        final var answer = helloClient.sayHello();
+        log.infof("client received: %s", answer);
+        return "Client answered: " + answer;
     }
 }

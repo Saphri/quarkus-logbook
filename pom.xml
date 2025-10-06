@@ -19,9 +19,9 @@
     </modules>
 
     <scm>
-        <connection>scm:git:git@github.com:quarkiverse/quarkus-logbook.git</connection>
-        <developerConnection>scm:git:git@github.com:quarkiverse/quarkus-logbook.git</developerConnection>
-        <url>https://github.com/quarkiverse/quarkus-logbook</url>
+        <connection>scm:git:git@github.com:Saphri/quarkus-logbook.git</connection>
+        <developerConnection>scm:git:git@github.com:Saphri/quarkus-logbook.git</developerConnection>
+        <url>https://github.com/Saphri/quarkus-logbook</url>
     </scm>
 
     <properties>

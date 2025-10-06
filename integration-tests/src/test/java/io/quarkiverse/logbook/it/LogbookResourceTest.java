@@ -44,4 +44,15 @@ public class LogbookResourceTest {
                 .then()
                 .statusCode(500);
     }
+
+    @Test
+    void testViaClient() {
+        given()
+                .accept(MediaType.TEXT_PLAIN)
+                .when()
+                .get("/logbook/client")
+                .then()
+                .statusCode(200)
+                .body(is("Client answered: Hello logbook"));
+    }
 }

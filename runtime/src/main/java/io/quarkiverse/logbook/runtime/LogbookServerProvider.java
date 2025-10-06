@@ -29,7 +29,7 @@ public class LogbookServerProvider {
 
     @ApplicationScoped
     @DefaultBean
-    public Logbook serverLogbook(
+    public Logbook logbook(
             final CorrelationId correlationId,
             final @All List<HeaderFilter> headerFilters,
             final @All List<PathFilter> pathFilters,

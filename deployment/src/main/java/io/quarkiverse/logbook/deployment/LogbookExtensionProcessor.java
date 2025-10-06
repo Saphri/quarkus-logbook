@@ -4,6 +4,7 @@ import io.quarkiverse.logbook.runtime.LogbookServerProvider;
 import io.quarkiverse.logbook.runtime.providers.HttpLogFormatterProvider;
 import io.quarkiverse.logbook.runtime.providers.ObfuscateProvider;
 import io.quarkiverse.logbook.runtime.providers.StrategyProvider;
+import io.quarkiverse.logbook.runtime.spi.QuarkusClientLogger;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.AdditionalIndexedClassesBuildItem;
@@ -30,6 +31,11 @@ class LogbookExtensionProcessor {
     }
 
     @BuildStep
+    RunTimeConfigurationDefaultBuildItem logbookRestClient() {
+        return new RunTimeConfigurationDefaultBuildItem("quarkus.rest-client.logging.scope", "request-response");
+    }
+
+    @BuildStep
     AdditionalIndexedClassesBuildItem logbookIndexedClasses() {
         return new AdditionalIndexedClassesBuildItem(
                 "org.zalando.logbook.Logbook",
@@ -39,6 +45,6 @@ class LogbookExtensionProcessor {
     @BuildStep
     public AdditionalBeanBuildItem producer() {
         return new AdditionalBeanBuildItem(ObfuscateProvider.class, HttpLogFormatterProvider.class,
-                StrategyProvider.class, LogbookServerProvider.class);
+                StrategyProvider.class, LogbookServerProvider.class, QuarkusClientLogger.class);
     }
 }

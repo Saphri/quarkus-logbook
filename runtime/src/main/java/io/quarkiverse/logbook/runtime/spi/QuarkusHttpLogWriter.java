@@ -24,5 +24,4 @@ public final class QuarkusHttpLogWriter implements HttpLogWriter {
     public void write(final Correlation correlation, final String response) {
         log.trace(response);
     }
-
 }

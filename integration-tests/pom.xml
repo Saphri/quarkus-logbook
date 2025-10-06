@@ -20,6 +20,10 @@
             <artifactId>quarkus-rest</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-client</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.quarkiverse.logbook</groupId>
             <artifactId>quarkus-logbook</artifactId>
             <version>${project.version}</version>
