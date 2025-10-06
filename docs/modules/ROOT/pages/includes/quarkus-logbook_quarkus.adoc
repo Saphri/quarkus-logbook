@@ -1,0 +1,87 @@
+[.configuration-legend]
+icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
+|===
+
+h|[.header-title]##Configuration property##
+h|Type
+h|Default
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-strategy]] [.property-path]##link:#quarkus-logbook_quarkus-strategy[`quarkus.strategy`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.strategy+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_STRATEGY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_STRATEGY+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++default+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-write-chunksize]] [.property-path]##link:#quarkus-logbook_quarkus-write-chunksize[`quarkus.write.chunksize`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.write.chunksize+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_WRITE_CHUNKSIZE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_WRITE_CHUNKSIZE+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++0+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-write-max-body-size]] [.property-path]##link:#quarkus-logbook_quarkus-write-max-body-size[`quarkus.write.max-body-size`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.write.max-body-size+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_WRITE_MAX_BODY_SIZE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_WRITE_MAX_BODY_SIZE+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++-1+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-minimum-status]] [.property-path]##link:#quarkus-logbook_quarkus-minimum-status[`quarkus.minimum-status`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.minimum-status+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_MINIMUM_STATUS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_MINIMUM_STATUS+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++400+++`
+
+|===
+
