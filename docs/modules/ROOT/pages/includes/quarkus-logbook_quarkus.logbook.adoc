@@ -91,6 +91,111 @@ endif::add-copy-button-to-env-var[]
 |string
 |`+++json+++`
 
+a| [[quarkus-logbook_quarkus-logbook-obfuscate-headers]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-obfuscate-headers[`quarkus.logbook.obfuscate.headers`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.obfuscate.headers+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+List of header names that need obfuscation.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_OBFUSCATE_HEADERS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_OBFUSCATE_HEADERS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|`+++Authorization+++`
+
+a| [[quarkus-logbook_quarkus-logbook-obfuscate-json-body-fields]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-obfuscate-json-body-fields[`quarkus.logbook.obfuscate.json-body-fields`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.obfuscate.json-body-fields+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+List of JSON body fields to be obfuscated.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_OBFUSCATE_JSON_BODY_FIELDS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_OBFUSCATE_JSON_BODY_FIELDS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a| [[quarkus-logbook_quarkus-logbook-obfuscate-parameters]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-obfuscate-parameters[`quarkus.logbook.obfuscate.parameters`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.obfuscate.parameters+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+List of parameter names that need obfuscation.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_OBFUSCATE_PARAMETERS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_OBFUSCATE_PARAMETERS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|`+++access_token+++`
+
+a| [[quarkus-logbook_quarkus-logbook-obfuscate-paths]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-obfuscate-paths[`quarkus.logbook.obfuscate.paths`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.obfuscate.paths+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+List of paths that need obfuscation. Check Filtering for syntax.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_OBFUSCATE_PATHS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_OBFUSCATE_PATHS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a| [[quarkus-logbook_quarkus-logbook-obfuscate-replacement]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-obfuscate-replacement[`quarkus.logbook.obfuscate.replacement`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.obfuscate.replacement+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+A value to be used instead of an obfuscated one.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_OBFUSCATE_REPLACEMENT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_OBFUSCATE_REPLACEMENT+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++XXX+++`
+
 a| [[quarkus-logbook_quarkus-logbook-minimum-status]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-minimum-status[`quarkus.logbook.minimum-status`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.logbook.minimum-status+++[]

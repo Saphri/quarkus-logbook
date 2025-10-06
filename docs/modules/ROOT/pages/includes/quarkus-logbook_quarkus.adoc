@@ -15,6 +15,8 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
+The strategy to use for logging requests and responses. Valid values are: - default: Log everything (default) - without-body: Log everything except bodies - status-at-least: Log only if status >= minimum-status (default 400) - body-only-if-status-at-least: Log request without body, then log both request and response with bodies only if status >= minimum-status (default 400)
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++QUARKUS_STRATEGY+++[]
@@ -26,20 +28,22 @@ endif::add-copy-button-to-env-var[]
 |string
 |`+++default+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-write-chunksize]] [.property-path]##link:#quarkus-logbook_quarkus-write-chunksize[`quarkus.write.chunksize`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-write-chunk-size]] [.property-path]##link:#quarkus-logbook_quarkus-write-chunk-size[`quarkus.write.chunk-size`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.write.chunksize+++[]
+config_property_copy_button:+++quarkus.write.chunk-size+++[]
 endif::add-copy-button-to-config-props[]
 
 
 [.description]
 --
+Splits log lines into smaller chunks of size up-to chunk-size. Default is 0, which means no chunking.
+
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_WRITE_CHUNKSIZE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_WRITE_CHUNK_SIZE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_WRITE_CHUNKSIZE+++`
+Environment variable: `+++QUARKUS_WRITE_CHUNK_SIZE+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
@@ -53,6 +57,8 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
+Truncates the body up to max-body-size characters and appends .... Default is -1, which means no truncation.
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++QUARKUS_WRITE_MAX_BODY_SIZE+++[]
@@ -64,6 +70,132 @@ endif::add-copy-button-to-env-var[]
 |int
 |`+++-1+++`
 
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-format-style]] [.property-path]##link:#quarkus-logbook_quarkus-format-style[`quarkus.format.style`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.format.style+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The style to use for formatting the log messages. Valid values are: - json: JSON format (default) - curl: cURL format - http: HTTP format - splunk: Splunk format
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_FORMAT_STYLE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_FORMAT_STYLE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++json+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-obfuscate-headers]] [.property-path]##link:#quarkus-logbook_quarkus-obfuscate-headers[`quarkus.obfuscate.headers`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.obfuscate.headers+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+List of header names that need obfuscation.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_OBFUSCATE_HEADERS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_OBFUSCATE_HEADERS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|`+++Authorization+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-obfuscate-json-body-fields]] [.property-path]##link:#quarkus-logbook_quarkus-obfuscate-json-body-fields[`quarkus.obfuscate.json-body-fields`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.obfuscate.json-body-fields+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+List of JSON body fields to be obfuscated.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_OBFUSCATE_JSON_BODY_FIELDS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_OBFUSCATE_JSON_BODY_FIELDS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-obfuscate-parameters]] [.property-path]##link:#quarkus-logbook_quarkus-obfuscate-parameters[`quarkus.obfuscate.parameters`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.obfuscate.parameters+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+List of parameter names that need obfuscation.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_OBFUSCATE_PARAMETERS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_OBFUSCATE_PARAMETERS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|`+++access_token+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-obfuscate-paths]] [.property-path]##link:#quarkus-logbook_quarkus-obfuscate-paths[`quarkus.obfuscate.paths`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.obfuscate.paths+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+List of paths that need obfuscation. Check Filtering for syntax.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_OBFUSCATE_PATHS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_OBFUSCATE_PATHS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-obfuscate-replacement]] [.property-path]##link:#quarkus-logbook_quarkus-obfuscate-replacement[`quarkus.obfuscate.replacement`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.obfuscate.replacement+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+A value to be used instead of an obfuscated one.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_OBFUSCATE_REPLACEMENT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_OBFUSCATE_REPLACEMENT+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++XXX+++`
+
 a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-minimum-status]] [.property-path]##link:#quarkus-logbook_quarkus-minimum-status[`quarkus.minimum-status`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.minimum-status+++[]
@@ -72,6 +204,8 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
+Minimum status to enable logging (status-at-least and body-only-if-status-at-least). Default is 400.
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++QUARKUS_MINIMUM_STATUS+++[]
