@@ -1,5 +1,8 @@
 package io.quarkiverse.logbook.runtime.configuration;
 
+import java.util.List;
+import java.util.Optional;
+
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
@@ -25,6 +28,11 @@ public interface LogbookConfiguration {
     FormatConfiguration format();
 
     /**
+     * Configuration properties for the obfuscate.
+     */
+    ObfuscateConfiguration obfuscate();
+
+    /**
      * Minimum status to enable logging (status-at-least and
      * body-only-if-status-at-least). Default is 400.
      */
@@ -48,7 +56,6 @@ public interface LogbookConfiguration {
     }
 
     public interface WriteConfiguration {
-
         /**
          * Splits log lines into smaller chunks of size up-to chunk-size. Default is 0,
          * which means no chunking.
@@ -65,7 +72,6 @@ public interface LogbookConfiguration {
     }
 
     public interface FormatConfiguration {
-
         /**
          * The style to use for formatting the log messages. Valid values are:
          * - json: JSON format (default)
@@ -75,5 +81,35 @@ public interface LogbookConfiguration {
          */
         @WithDefault("json")
         String style();
+    }
+
+    public interface ObfuscateConfiguration {
+        /**
+         * List of header names that need obfuscation.
+         */
+        @WithDefault("Authorization")
+        List<String> headers();
+
+        /**
+         * List of JSON body fields to be obfuscated.
+         */
+        Optional<List<String>> jsonBodyFields();
+
+        /**
+         * List of parameter names that need obfuscation.
+         */
+        @WithDefault("access_token")
+        List<String> parameters();
+
+        /**
+         * List of paths that need obfuscation. Check Filtering for syntax.
+         */
+        Optional<List<String>> paths();
+
+        /**
+         * A value to be used instead of an obfuscated one.
+         */
+        @WithDefault("XXX")
+        String replacement();
     }
 }
