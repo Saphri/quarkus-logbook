@@ -362,7 +362,7 @@ Environment variable: `+++QUARKUS_LOGBOOK_ATTRIBUTE_EXTRACTORS_CLAIM_KEY+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|required icon:exclamation-circle[title=Configuration property is required]
+|
 
 |===
 
