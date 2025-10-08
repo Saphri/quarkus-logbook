@@ -196,6 +196,82 @@ endif::add-copy-button-to-env-var[]
 |string
 |`+++XXX+++`
 
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-predicate-include-path]] [.property-path]##link:#quarkus-logbook_quarkus-predicate-include-path[`quarkus.predicate.include.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.predicate.include.path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_PREDICATE_INCLUDE_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_PREDICATE_INCLUDE_PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-predicate-include-methods]] [.property-path]##link:#quarkus-logbook_quarkus-predicate-include-methods[`quarkus.predicate.include.methods`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.predicate.include.methods+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_PREDICATE_INCLUDE_METHODS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_PREDICATE_INCLUDE_METHODS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-predicate-exclude-path]] [.property-path]##link:#quarkus-logbook_quarkus-predicate-exclude-path[`quarkus.predicate.exclude.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.predicate.exclude.path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_PREDICATE_EXCLUDE_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_PREDICATE_EXCLUDE_PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-predicate-exclude-methods]] [.property-path]##link:#quarkus-logbook_quarkus-predicate-exclude-methods[`quarkus.predicate.exclude.methods`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.predicate.exclude.methods+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_PREDICATE_EXCLUDE_METHODS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_PREDICATE_EXCLUDE_METHODS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|required icon:exclamation-circle[title=Configuration property is required]
+
 a|icon:lock[title=Fixed at build time] [[quarkus-logbook_quarkus-minimum-status]] [.property-path]##link:#quarkus-logbook_quarkus-minimum-status[`quarkus.minimum-status`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.minimum-status+++[]
