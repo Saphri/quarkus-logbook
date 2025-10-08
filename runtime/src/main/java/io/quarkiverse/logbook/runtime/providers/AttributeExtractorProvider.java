@@ -43,13 +43,13 @@ public class AttributeExtractorProvider {
         }
     }
 
-    public AttributeExtractor toExtractor(final AttributeExtractorConfiguration config, final ObjectMapper objectMapper) {
+    private AttributeExtractor toExtractor(final AttributeExtractorConfiguration config, final ObjectMapper objectMapper) {
         switch (config.type()) {
             case "JwtFirstMatchingClaimExtractor":
                 return JwtFirstMatchingClaimExtractor.builder()
                         .objectMapper(objectMapper)
                         .claimNames(config.claimNames())
-                        .claimKey(config.claimKey())
+                        .claimKey(config.claimKey().orElse(null))
                         .build();
             case "JwtAllMatchingClaimsExtractor":
                 return JwtAllMatchingClaimsExtractor.builder()

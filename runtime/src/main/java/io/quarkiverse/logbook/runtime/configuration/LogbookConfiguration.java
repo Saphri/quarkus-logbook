@@ -167,6 +167,6 @@ public interface LogbookConfiguration {
         /**
          * The configuration property for the attribute extractor claim key.
          */
-        String claimKey();
+        Optional<String> claimKey();
     }
 }
