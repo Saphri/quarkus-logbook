@@ -31,7 +31,7 @@ public class ObfuscateProvider {
     @DefaultBean
     public HeaderFilter headerFilter() {
         final var headers = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        headers.addAll(logbookConfiguration.obfuscate().headers());
+        headers.addAll(logbookConfiguration.obfuscate().headers().orElseGet(List::of));
 
         return headers.isEmpty() ? HeaderFilters.defaultValue()
                 : replaceHeaders(headers, logbookConfiguration.obfuscate().replacement());
@@ -40,7 +40,7 @@ public class ObfuscateProvider {
     @ApplicationScoped
     @DefaultBean
     public QueryFilter queryFilter() {
-        final var parameters = logbookConfiguration.obfuscate().parameters();
+        final var parameters = logbookConfiguration.obfuscate().parameters().orElseGet(List::of);
 
         return parameters.isEmpty() ? QueryFilters.defaultValue()
                 : replaceQuery(new HashSet<>(parameters)::contains, logbookConfiguration.obfuscate().replacement());

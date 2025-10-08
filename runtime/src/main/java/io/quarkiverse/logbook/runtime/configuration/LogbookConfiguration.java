@@ -88,7 +88,7 @@ public interface LogbookConfiguration {
          * List of header names that need obfuscation.
          */
         @WithDefault("Authorization")
-        List<String> headers();
+        Optional<List<String>> headers();
 
         /**
          * List of JSON body fields to be obfuscated.
@@ -99,7 +99,7 @@ public interface LogbookConfiguration {
          * List of parameter names that need obfuscation.
          */
         @WithDefault("access_token")
-        List<String> parameters();
+        Optional<List<String>> parameters();
 
         /**
          * List of paths that need obfuscation. Check Filtering for syntax.
