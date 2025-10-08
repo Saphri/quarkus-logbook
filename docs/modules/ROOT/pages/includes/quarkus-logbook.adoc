@@ -204,7 +204,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The predicate type. Valid values are: - request-to: matches the request path - remote-host: matches the remote host - method: matches the HTTP method
+The path to filter.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -225,7 +225,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The predicate pattern. Check Filtering for syntax.
+HTTP methods to filter.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -236,7 +236,7 @@ Environment variable: `+++QUARKUS_LOGBOOK_PREDICATE_INCLUDE_METHODS+++`
 endif::add-copy-button-to-env-var[]
 --
 |list of string
-|required icon:exclamation-circle[title=Configuration property is required]
+|
 
 a| [[quarkus-logbook_quarkus-logbook-predicate-exclude-path]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-predicate-exclude-path[`quarkus.logbook.predicate.exclude.path`]##
 ifdef::add-copy-button-to-config-props[]
@@ -246,7 +246,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The predicate type. Valid values are: - request-to: matches the request path - remote-host: matches the remote host - method: matches the HTTP method
+The path to filter.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -267,7 +267,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The predicate pattern. Check Filtering for syntax.
+HTTP methods to filter.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -278,7 +278,7 @@ Environment variable: `+++QUARKUS_LOGBOOK_PREDICATE_EXCLUDE_METHODS+++`
 endif::add-copy-button-to-env-var[]
 --
 |list of string
-|required icon:exclamation-circle[title=Configuration property is required]
+|
 
 a| [[quarkus-logbook_quarkus-logbook-minimum-status]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-minimum-status[`quarkus.logbook.minimum-status`]##
 ifdef::add-copy-button-to-config-props[]
