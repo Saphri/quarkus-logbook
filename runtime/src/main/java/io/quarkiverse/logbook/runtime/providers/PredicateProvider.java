@@ -44,7 +44,7 @@ public class PredicateProvider {
                 .orElse(predicate);
     }
 
-    private Predicate<HttpRequest> convertToPredicate(LogbookPredicate logbookPredicate) {
+    private Predicate<HttpRequest> convertToPredicate(final LogbookPredicate logbookPredicate) {
         final var predicatePath = logbookPredicate.path();
         final var predicateMethods = logbookPredicate.methods().orElseGet(List::of);
 
