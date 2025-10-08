@@ -1,10 +1,15 @@
 package io.quarkiverse.logbook.runtime;
 
+import static org.zalando.logbook.core.BodyFilters.truncate;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
+import org.zalando.logbook.BodyFilter;
 import org.zalando.logbook.CorrelationId;
 import org.zalando.logbook.HeaderFilter;
 import org.zalando.logbook.HttpLogFormatter;
@@ -13,6 +18,8 @@ import org.zalando.logbook.HttpRequest;
 import org.zalando.logbook.Logbook;
 import org.zalando.logbook.PathFilter;
 import org.zalando.logbook.QueryFilter;
+import org.zalando.logbook.RequestFilter;
+import org.zalando.logbook.ResponseFilter;
 import org.zalando.logbook.Sink;
 import org.zalando.logbook.Strategy;
 import org.zalando.logbook.core.ChunkingSink;
@@ -24,7 +31,13 @@ import io.quarkiverse.logbook.runtime.spi.QuarkusHttpLogWriter;
 import io.quarkus.arc.All;
 import io.quarkus.arc.DefaultBean;
 
-public class LogbookServerProvider {
+public class LogbookProvider {
+
+    private final LogbookConfiguration logbookConfiguration;
+
+    public LogbookProvider(LogbookConfiguration logbookConfiguration) {
+        this.logbookConfiguration = logbookConfiguration;
+    }
 
     @ApplicationScoped
     @DefaultBean
@@ -34,6 +47,9 @@ public class LogbookServerProvider {
             final @All List<HeaderFilter> headerFilters,
             final @All List<PathFilter> pathFilters,
             final @All List<QueryFilter> queryFilters,
+            final @All List<BodyFilter> bodyFilters,
+            final @All List<RequestFilter> requestFilters,
+            final @All List<ResponseFilter> responseFilters,
             final Strategy strategy,
             final Sink sink) {
         return Logbook.builder()
@@ -42,9 +58,25 @@ public class LogbookServerProvider {
                 .headerFilters(headerFilters)
                 .queryFilters(queryFilters)
                 .pathFilters(pathFilters)
+                .bodyFilters(mergeWithTruncation(bodyFilters))
+                .requestFilters(requestFilters)
+                .responseFilters(responseFilters)
                 .strategy(strategy)
                 .sink(sink)
                 .build();
+    }
+
+    private Collection<BodyFilter> mergeWithTruncation(final List<BodyFilter> bodyFilters) {
+        final var maxBodySize = logbookConfiguration.write().maxBodySize();
+        if (maxBodySize < 0) {
+            return bodyFilters;
+        }
+
+        // To ensure that truncation will happen after all other body filters
+        final var filters = new ArrayList<BodyFilter>(bodyFilters);
+        final var filter = truncate(maxBodySize);
+        filters.add(filter);
+        return filters;
     }
 
     @ApplicationScoped
