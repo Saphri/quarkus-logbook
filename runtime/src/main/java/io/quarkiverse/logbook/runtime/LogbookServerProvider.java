@@ -1,9 +1,7 @@
 package io.quarkiverse.logbook.runtime;
 
-import static org.zalando.logbook.core.Conditions.exclude;
-import static org.zalando.logbook.core.Conditions.requestTo;
-
 import java.util.List;
+import java.util.function.Predicate;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -11,6 +9,7 @@ import org.zalando.logbook.CorrelationId;
 import org.zalando.logbook.HeaderFilter;
 import org.zalando.logbook.HttpLogFormatter;
 import org.zalando.logbook.HttpLogWriter;
+import org.zalando.logbook.HttpRequest;
 import org.zalando.logbook.Logbook;
 import org.zalando.logbook.PathFilter;
 import org.zalando.logbook.QueryFilter;
@@ -30,6 +29,7 @@ public class LogbookServerProvider {
     @ApplicationScoped
     @DefaultBean
     public Logbook logbook(
+            final Predicate<HttpRequest> condition,
             final CorrelationId correlationId,
             final @All List<HeaderFilter> headerFilters,
             final @All List<PathFilter> pathFilters,
@@ -37,7 +37,7 @@ public class LogbookServerProvider {
             final Strategy strategy,
             final Sink sink) {
         return Logbook.builder()
-                .condition(exclude(requestTo("/q/**")))
+                .condition(condition)
                 .correlationId(correlationId)
                 .headerFilters(headerFilters)
                 .queryFilters(queryFilters)

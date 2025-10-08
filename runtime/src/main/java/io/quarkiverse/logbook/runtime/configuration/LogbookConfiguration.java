@@ -33,6 +33,11 @@ public interface LogbookConfiguration {
     ObfuscateConfiguration obfuscate();
 
     /**
+     * Configuration properties for the predicate.
+     */
+    PredicateConfiguration predicate();
+
+    /**
      * Minimum status to enable logging (status-at-least and
      * body-only-if-status-at-least). Default is 400.
      */
@@ -111,5 +116,35 @@ public interface LogbookConfiguration {
          */
         @WithDefault("XXX")
         String replacement();
+    }
+
+    public interface PredicateConfiguration {
+        /**
+         * List of paths to include from logging. Check Filtering for syntax.
+         */
+        Optional<List<LogbookPredicate>> include();
+
+        /**
+         * List of paths to exclude from logging. Check Filtering for syntax.
+         */
+        Optional<List<LogbookPredicate>> exclude();
+    }
+
+    /**
+     * A predicate definition.
+     */
+    public interface LogbookPredicate {
+        /**
+         * The predicate type. Valid values are:
+         * - request-to: matches the request path
+         * - remote-host: matches the remote host
+         * - method: matches the HTTP method
+         */
+        String path();
+
+        /**
+         * The predicate pattern. Check Filtering for syntax.
+         */
+        List<String> methods();
     }
 }
