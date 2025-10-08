@@ -22,6 +22,7 @@ import org.zalando.logbook.RequestFilter;
 import org.zalando.logbook.ResponseFilter;
 import org.zalando.logbook.Sink;
 import org.zalando.logbook.Strategy;
+import org.zalando.logbook.attributes.AttributeExtractor;
 import org.zalando.logbook.core.ChunkingSink;
 import org.zalando.logbook.core.DefaultCorrelationId;
 import org.zalando.logbook.core.DefaultSink;
@@ -51,6 +52,7 @@ public class LogbookProvider {
             final @All List<RequestFilter> requestFilters,
             final @All List<ResponseFilter> responseFilters,
             final Strategy strategy,
+            final AttributeExtractor attributeExtractor,
             final Sink sink) {
         return Logbook.builder()
                 .condition(condition)
@@ -62,6 +64,7 @@ public class LogbookProvider {
                 .requestFilters(requestFilters)
                 .responseFilters(responseFilters)
                 .strategy(strategy)
+                .attributeExtractor(attributeExtractor)
                 .sink(sink)
                 .build();
     }
