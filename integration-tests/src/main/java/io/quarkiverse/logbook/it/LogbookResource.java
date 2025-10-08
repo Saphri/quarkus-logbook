@@ -32,12 +32,14 @@ public class LogbookResource {
     @GET
     @Path("/error")
     public void error() {
+        log.info("error invoked");
         throw new WebApplicationException("Boom!", new IllegalStateException("bomb"));
     }
 
     @GET
     @Path("/bad-request")
     public void badRequest() {
+        log.info("badRequest invoked");
         throw new BadRequestException("bad boy", new IllegalArgumentException("bad argument"));
     }
 
