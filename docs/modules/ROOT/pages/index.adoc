@@ -2,7 +2,7 @@
 
 include::./includes/attributes.adoc[]
 
-TIP: Describe what the extension does here.
+A nice Zalando Logbook integration for Quarkus. Think the nice autoconfigured part of Zalando Logbook, but just for Quarkus.
 
 == Installation
 
