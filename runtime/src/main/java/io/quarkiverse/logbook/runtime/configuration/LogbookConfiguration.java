@@ -45,6 +45,11 @@ public interface LogbookConfiguration {
     @WithDefault("400")
     int minimumStatus();
 
+    /**
+     * Configuration properties for the attributeExtractors.
+     */
+    Optional<List<AttributeExtractorConfiguration>> attributeExtractors();
+
     public interface StrategyConfiguration {
         /**
          * The strategy to use for logging requests and responses.
@@ -146,5 +151,22 @@ public interface LogbookConfiguration {
          * HTTP methods to filter.
          */
         Optional<List<String>> methods();
+    }
+
+    public interface AttributeExtractorConfiguration {
+        /**
+         * Attribute extractor type (currently JwtFirstMatchingClaimExtractor or JwtAllMatchingClaimsExtractor)
+         */
+        String type();
+
+        /**
+         * Configuration properties for the attribute extractor claim names.
+         */
+        List<String> claimNames();
+
+        /**
+         * The configuration property for the attribute extractor claim key.
+         */
+        String claimKey();
     }
 }
