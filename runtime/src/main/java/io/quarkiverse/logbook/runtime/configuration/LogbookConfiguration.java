@@ -120,12 +120,12 @@ public interface LogbookConfiguration {
 
     public interface PredicateConfiguration {
         /**
-         * List of paths to include from logging. Check Filtering for syntax.
+         * Include only certain paths and methods (if defined)
          */
         Optional<List<LogbookPredicate>> include();
 
         /**
-         * List of paths to exclude from logging. Check Filtering for syntax.
+         * Exclude certain paths and methods (overrides logbook.predicate.include)
          */
         Optional<List<LogbookPredicate>> exclude();
     }
@@ -135,16 +135,13 @@ public interface LogbookConfiguration {
      */
     public interface LogbookPredicate {
         /**
-         * The predicate type. Valid values are:
-         * - request-to: matches the request path
-         * - remote-host: matches the remote host
-         * - method: matches the HTTP method
+         * The path to filter.
          */
         String path();
 
         /**
-         * The predicate pattern. Check Filtering for syntax.
+         * HTTP methods to filter.
          */
-        List<String> methods();
+        Optional<List<String>> methods();
     }
 }
