@@ -24,10 +24,9 @@ public class RemoteResponse implements HttpResponse {
 
     public static HttpResponse create(final HttpClientResponse response, final Buffer body) {
         return new RemoteResponse(
-            response.statusCode(),
-            HeaderUtils.toLogbookHeaders(response.headers()),
-            body == null ? new byte[0] : body.getBytes()
-        );
+                response.statusCode(),
+                HeaderUtils.toLogbookHeaders(response.headers()),
+                body == null ? new byte[0] : body.getBytes());
     }
 
     @Override
