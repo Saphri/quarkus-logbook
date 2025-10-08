@@ -47,7 +47,7 @@ class LogbookExtensionProcessor {
     @BuildStep
     public AdditionalBeanBuildItem producer() {
         return new AdditionalBeanBuildItem(ObfuscateProvider.class, HttpLogFormatterProvider.class,
-                StrategyProvider.class, LogbookProvider.class, PredicateProvider.class, AttributeExtractorProvider.class,
+                StrategyProvider.class, PredicateProvider.class, AttributeExtractorProvider.class, LogbookProvider.class,
                 QuarkusClientLogger.class);
     }
 }
