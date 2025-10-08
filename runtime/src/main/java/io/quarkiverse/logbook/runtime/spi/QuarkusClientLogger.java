@@ -48,7 +48,7 @@ public class QuarkusClientLogger implements ClientLogger {
                     stage.process(httpResponse).write();
                 } catch (Exception e) {
                     // we can't do much here, logbook already tried its best
-                    log.tracef(e, "Failed to log response for %s", response.request().absoluteURI());
+                    log.warnf(e, "Failed to log response for %s", response.request().absoluteURI());
                 }
             }
         });
@@ -68,7 +68,7 @@ public class QuarkusClientLogger implements ClientLogger {
             context.putLocal(LOGBOOK_STAGE, processingStage);
         } catch (Exception e) {
             // If we can't log the request, we can't log the response either
-            log.tracef(e, "Failed to log request for %s", request.absoluteURI());
+            log.warnf(e, "Failed to log request for %s", request.absoluteURI());
         }
     }
 }
