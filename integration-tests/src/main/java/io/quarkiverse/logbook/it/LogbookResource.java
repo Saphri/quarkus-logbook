@@ -47,7 +47,7 @@ public class LogbookResource {
     @Path("/client")
     public String client() {
         log.info("client invoked");
-        final var answer = helloClient.sayHello();
+        final var answer = helloClient.sayHello("TopSecret");
         log.infof("client received: %s", answer);
         return "Client answered: " + answer;
     }
