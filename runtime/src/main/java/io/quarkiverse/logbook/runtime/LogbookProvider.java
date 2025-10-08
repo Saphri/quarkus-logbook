@@ -34,15 +34,10 @@ import io.quarkus.arc.DefaultBean;
 
 public class LogbookProvider {
 
-    private final LogbookConfiguration logbookConfiguration;
-
-    public LogbookProvider(LogbookConfiguration logbookConfiguration) {
-        this.logbookConfiguration = logbookConfiguration;
-    }
-
     @ApplicationScoped
     @DefaultBean
     public Logbook logbook(
+            final LogbookConfiguration logbookConfiguration,
             final Predicate<HttpRequest> condition,
             final CorrelationId correlationId,
             final @All List<HeaderFilter> headerFilters,
@@ -60,7 +55,7 @@ public class LogbookProvider {
                 .headerFilters(headerFilters)
                 .queryFilters(queryFilters)
                 .pathFilters(pathFilters)
-                .bodyFilters(mergeWithTruncation(bodyFilters))
+                .bodyFilters(mergeWithTruncation(bodyFilters, logbookConfiguration))
                 .requestFilters(requestFilters)
                 .responseFilters(responseFilters)
                 .strategy(strategy)
@@ -69,7 +64,8 @@ public class LogbookProvider {
                 .build();
     }
 
-    private Collection<BodyFilter> mergeWithTruncation(final List<BodyFilter> bodyFilters) {
+    private Collection<BodyFilter> mergeWithTruncation(final List<BodyFilter> bodyFilters,
+            final LogbookConfiguration logbookConfiguration) {
         final var maxBodySize = logbookConfiguration.write().maxBodySize();
         if (maxBodySize < 0) {
             return bodyFilters;
