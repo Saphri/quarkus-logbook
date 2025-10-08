@@ -9,7 +9,7 @@
   - `docs/`: Antora-based documentation
 
 ## Architecture & Patterns
-- Extension entrypoint: `LogbookServerProvider` in `runtime/` provides a CDI bean for Logbook, using config from `LogbookConfiguration`.
+- Extension entrypoint: `LogbookProvider` in `runtime/` provides a CDI bean for Logbook, using config from `LogbookConfiguration`.
 - Configuration is mapped via `@ConfigMapping` and `@ConfigRoot` (see `runtime/configuration/LogbookConfiguration.java`).
 - Quarkus extension conventions: deployment module wires up build-time logic, runtime module provides beans and config.
 - Tests use `QuarkusUnitTest` and `@RegisterExtension` for isolated extension testing (see `deployment/src/test/java/io/quarkiverse/logbook/test/LogbookTest.java`).
@@ -22,12 +22,12 @@
 ## Key Conventions
 - All configuration properties for users are prefixed with `quarkus.logbook`.
 - Runtime config is defined in `LogbookConfiguration.java` and exposed via CDI beans.
-- External dependencies: Zalando Logbook, Quarkus core, Quarkus REST, Quarkus ARC.
+- External dependencies: Zalando Logbook, Quarkus core, Quarkus REST, Quarkus REST Jackson, Quarkus ARC.
 - Documentation follows Antora structure in `docs/`.
 
 ## Examples
 - To add a new config property, update `LogbookConfiguration.java` and document in `docs/modules/ROOT/pages/index.adoc`.
-- To extend Logbook behavior, modify `LogbookServerProvider.java` and ensure new beans are annotated for CDI.
+- To extend Logbook behavior, modify `LogbookProvider.java` and ensure new beans are annotated for CDI.
 - For integration tests, use RestAssured and Quarkus test extensions as shown in `integration-tests/`.
 
 ## References
