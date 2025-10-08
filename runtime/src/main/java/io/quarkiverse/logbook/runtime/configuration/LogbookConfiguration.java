@@ -7,6 +7,7 @@ import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithDefault;
+import io.smallrye.config.WithName;
 import io.smallrye.config.WithParentName;
 
 @ConfigMapping(prefix = "quarkus.logbook")
@@ -122,12 +123,14 @@ public interface LogbookConfiguration {
         /**
          * Include only certain paths and methods (if defined)
          */
-        Optional<List<LogbookPredicate>> include();
+        @WithName("include")
+        Optional<List<LogbookPredicate>> includes();
 
         /**
          * Exclude certain paths and methods (overrides logbook.predicate.include)
          */
-        Optional<List<LogbookPredicate>> exclude();
+        @WithName("exclude")
+        Optional<List<LogbookPredicate>> excludes();
     }
 
     /**
