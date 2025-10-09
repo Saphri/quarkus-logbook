@@ -28,9 +28,11 @@ public class CustomLogbookProvider {
 
 === Customizing Filters
 
-You can add custom filters by creating CDI beans that implement the corresponding filter interfaces. You can have multiple beans for each filter type.
+You can add custom filters by creating CDI beans that implement the corresponding filter interfaces. You can have multiple beans for each filter type. For more details, see the official https://github.com/zalando/logbook#filtering[Logbook documentation].
 
 ==== `HeaderFilter`
+
+Filters headers to prevent logging of sensitive information.
 
 [source,java]
 ----
@@ -45,6 +47,8 @@ public class CustomHeaderFilter implements HeaderFilter {
 
 ==== `PathFilter`
 
+Filters request paths.
+
 [source,java]
 ----
 import jakarta.enterprise.context.ApplicationScoped;
@@ -57,6 +61,8 @@ public class CustomPathFilter implements PathFilter {
 ----
 
 ==== `QueryFilter`
+
+Filters query parameters from the request URI.
 
 [source,java]
 ----
@@ -71,6 +77,8 @@ public class CustomQueryFilter implements QueryFilter {
 
 ==== `BodyFilter`
 
+Filters the body of requests and responses.
+
 [source,java]
 ----
 import jakarta.enterprise.context.ApplicationScoped;
@@ -84,6 +92,8 @@ public class CustomBodyFilter implements BodyFilter {
 
 ==== `RequestFilter`
 
+A low-level filter that operates on the entire `HttpRequest`.
+
 [source,java]
 ----
 import jakarta.enterprise.context.ApplicationScoped;
@@ -96,6 +106,8 @@ public class CustomRequestFilter implements RequestFilter {
 ----
 
 ==== `ResponseFilter`
+
+A low-level filter that operates on the entire `HttpResponse`.
 
 [source,java]
 ----
@@ -114,6 +126,8 @@ You can also customize other parts of Logbook by providing beans for the followi
 
 ==== `HttpLogFormatter`
 
+Defines how requests and responses are transformed into strings. See the https://github.com/zalando/logbook#formatting[Logbook documentation] for available formatters.
+
 [source,java]
 ----
 import jakarta.enterprise.context.ApplicationScoped;
@@ -126,6 +140,8 @@ public class CustomHttpLogFormatter implements HttpLogFormatter {
 ----
 
 ==== `HttpLogWriter`
+
+Defines where the formatted requests and responses are written to. See the https://github.com/zalando/logbook#writing[Logbook documentation] for more details.
 
 [source,java]
 ----
@@ -140,6 +156,8 @@ public class CustomHttpLogWriter implements HttpLogWriter {
 
 ==== `Strategy`
 
+Defines how and when requests and responses are logged. See the https://github.com/zalando/logbook#strategy[Logbook documentation] for built-in strategies.
+
 [source,java]
 ----
 import jakarta.enterprise.context.ApplicationScoped;
@@ -152,6 +170,8 @@ public class CustomStrategy implements Strategy {
 ----
 
 ==== `AttributeExtractor`
+
+Extracts a list of key/value pairs from requests and/or responses to be included in the logs. See the https://github.com/zalando/logbook#attribute-extractor[Logbook documentation] for more details.
 
 [source,java]
 ----
@@ -166,6 +186,8 @@ public class CustomAttributeExtractor implements AttributeExtractor {
 
 ==== `CorrelationId`
 
+Generates a correlation ID to link requests and responses. See the https://github.com/zalando/logbook#correlation[Logbook documentation] for more information.
+
 [source,java]
 ----
 import jakarta.enterprise.context.ApplicationScoped;
@@ -178,6 +200,8 @@ public class CustomCorrelationId implements CorrelationId {
 ----
 
 ==== `Sink`
+
+A combination of `HttpLogFormatter` and `HttpLogWriter` that allows for more sophisticated writing strategies. See the https://github.com/zalando/logbook#sink[Logbook documentation] for more details.
 
 [source,java]
 ----
