@@ -1,7 +1,6 @@
 package io.quarkiverse.logbook.runtime.providers;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -49,7 +48,7 @@ class PredicateProviderTest {
         when(predicateConfig.excludes()).thenReturn(Optional.empty());
 
         Predicate<HttpRequest> predicate = provider.condition();
-        assertTrue(predicate.test(request));
+        assertThat(predicate.test(request)).isTrue();
     }
 
     @Test
@@ -61,7 +60,7 @@ class PredicateProviderTest {
         when(request.getPath()).thenReturn("/api/include");
 
         Predicate<HttpRequest> predicate = provider.condition();
-        assertTrue(predicate.test(request));
+        assertThat(predicate.test(request)).isTrue();
     }
 
     @Test
@@ -73,7 +72,7 @@ class PredicateProviderTest {
         when(request.getPath()).thenReturn("/api/exclude");
 
         Predicate<HttpRequest> predicate = provider.condition();
-        assertFalse(predicate.test(request));
+        assertThat(predicate.test(request)).isFalse();
     }
 
     @Test
@@ -88,10 +87,10 @@ class PredicateProviderTest {
         Predicate<HttpRequest> predicate = provider.condition();
 
         when(request.getPath()).thenReturn("/api/include");
-        assertTrue(predicate.test(request));
+        assertThat(predicate.test(request)).isTrue();
 
         when(request.getPath()).thenReturn("/api/exclude");
-        assertFalse(predicate.test(request));
+        assertThat(predicate.test(request)).isFalse();
     }
 
     @Test
@@ -105,9 +104,9 @@ class PredicateProviderTest {
 
         when(request.getPath()).thenReturn("/api/test");
         when(request.getMethod()).thenReturn("GET");
-        assertTrue(predicate.test(request));
+        assertThat(predicate.test(request)).isTrue();
 
         when(request.getMethod()).thenReturn("POST");
-        assertFalse(predicate.test(request));
+        assertThat(predicate.test(request)).isFalse();
     }
 }

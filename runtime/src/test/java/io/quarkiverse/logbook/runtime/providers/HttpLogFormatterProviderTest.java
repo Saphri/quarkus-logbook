@@ -1,6 +1,7 @@
 package io.quarkiverse.logbook.runtime.providers;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 import jakarta.enterprise.inject.Instance;
@@ -45,24 +46,21 @@ class HttpLogFormatterProviderTest {
     void shouldProvideDefaultFormatter() {
         when(formatConfig.style()).thenReturn("http");
         HttpLogFormatter formatter = provider.format(logbookConfiguration);
-        assertNotNull(formatter);
-        assertInstanceOf(DefaultHttpLogFormatter.class, formatter);
+        assertThat(formatter).isNotNull().isInstanceOf(DefaultHttpLogFormatter.class);
     }
 
     @Test
     void shouldProvideCurlFormatter() {
         when(formatConfig.style()).thenReturn("curl");
         HttpLogFormatter formatter = provider.format(logbookConfiguration);
-        assertNotNull(formatter);
-        assertInstanceOf(CurlHttpLogFormatter.class, formatter);
+        assertThat(formatter).isNotNull().isInstanceOf(CurlHttpLogFormatter.class);
     }
 
     @Test
     void shouldProvideSplunkFormatter() {
         when(formatConfig.style()).thenReturn("splunk");
         HttpLogFormatter formatter = provider.format(logbookConfiguration);
-        assertNotNull(formatter);
-        assertInstanceOf(SplunkHttpLogFormatter.class, formatter);
+        assertThat(formatter).isNotNull().isInstanceOf(SplunkHttpLogFormatter.class);
     }
 
     @Test
@@ -76,14 +74,14 @@ class HttpLogFormatterProviderTest {
 
             when(formatConfig.style()).thenReturn("json");
             HttpLogFormatter formatter = provider.format(logbookConfiguration);
-            assertNotNull(formatter);
-            assertInstanceOf(JsonHttpLogFormatter.class, formatter);
+            assertThat(formatter).isNotNull().isInstanceOf(JsonHttpLogFormatter.class);
         }
     }
 
     @Test
     void shouldThrowExceptionForUnknownStyle() {
         when(formatConfig.style()).thenReturn("unknown-style");
-        assertThrows(IllegalArgumentException.class, () -> provider.format(logbookConfiguration));
+        assertThatThrownBy(() -> provider.format(logbookConfiguration))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

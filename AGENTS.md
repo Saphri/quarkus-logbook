@@ -19,6 +19,10 @@
 - Run integration tests: `./mvnw verify -pl integration-tests`
 - To debug extension logic, use Quarkus dev mode in a sample app or run unit tests in `deployment/`.
 
+## Testing Conventions
+- **Use AssertJ for assertions.** It provides more readable and fluent assertions compared to JUnit's `Assertions`.
+- **Mockito dependencies are included in `quarkus-junit5`** and do not need to be added explicitly to the POM.
+
 ## Key Conventions
 - All configuration properties for users are prefixed with `quarkus.logbook`.
 - Runtime config is defined in `LogbookConfiguration.java` and exposed via CDI beans.
