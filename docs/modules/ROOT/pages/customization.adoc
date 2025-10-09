@@ -10,20 +10,7 @@ If you need complete control over the Logbook configuration, you can provide you
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Produces;
-import org.zalando.logbook.Logbook;
-
-@ApplicationScoped
-public class CustomLogbookProvider {
-
-    @Produces
-    public Logbook customLogbook() {
-        return Logbook.builder()
-                // your custom configuration
-                .build();
-    }
-}
+include::../examples/CustomLogbookProvider.java[]
 ----
 
 === Customizing Filters
@@ -36,13 +23,7 @@ Filters headers to prevent logging of sensitive information.
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.HeaderFilter;
-
-@ApplicationScoped
-public class CustomHeaderFilter implements HeaderFilter {
-    // implementation
-}
+include::../examples/CustomHeaderFilter.java[]
 ----
 
 ==== `PathFilter`
@@ -51,13 +32,7 @@ Filters request paths.
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.PathFilter;
-
-@ApplicationScoped
-public class CustomPathFilter implements PathFilter {
-    // implementation
-}
+include::../examples/CustomPathFilter.java[]
 ----
 
 ==== `QueryFilter`
@@ -66,13 +41,7 @@ Filters query parameters from the request URI.
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.QueryFilter;
-
-@ApplicationScoped
-public class CustomQueryFilter implements QueryFilter {
-    // implementation
-}
+include::../examples/CustomQueryFilter.java[]
 ----
 
 ==== `BodyFilter`
@@ -81,13 +50,7 @@ Filters the body of requests and responses.
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.BodyFilter;
-
-@ApplicationScoped
-public class CustomBodyFilter implements BodyFilter {
-    // implementation
-}
+include::../examples/CustomBodyFilter.java[]
 ----
 
 ==== `RequestFilter`
@@ -96,13 +59,7 @@ A low-level filter that operates on the entire `HttpRequest`.
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.RequestFilter;
-
-@ApplicationScoped
-public class CustomRequestFilter implements RequestFilter {
-    // implementation
-}
+include::../examples/CustomRequestFilter.java[]
 ----
 
 ==== `ResponseFilter`
@@ -111,13 +68,7 @@ A low-level filter that operates on the entire `HttpResponse`.
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.ResponseFilter;
-
-@ApplicationScoped
-public class CustomResponseFilter implements ResponseFilter {
-    // implementation
-}
+include::../examples/CustomResponseFilter.java[]
 ----
 
 === Other customizations
@@ -130,13 +81,7 @@ Defines how requests and responses are transformed into strings. See the https:/
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.HttpLogFormatter;
-
-@ApplicationScoped
-public class CustomHttpLogFormatter implements HttpLogFormatter {
-    // implementation
-}
+include::../examples/CustomHttpLogFormatter.java[]
 ----
 
 ==== `HttpLogWriter`
@@ -145,13 +90,7 @@ Defines where the formatted requests and responses are written to. See the https
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.HttpLogWriter;
-
-@ApplicationScoped
-public class CustomHttpLogWriter implements HttpLogWriter {
-    // implementation
-}
+include::../examples/CustomHttpLogWriter.java[]
 ----
 
 ==== `Strategy`
@@ -160,13 +99,7 @@ Defines how and when requests and responses are logged. See the https://github.c
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.Strategy;
-
-@ApplicationScoped
-public class CustomStrategy implements Strategy {
-    // implementation
-}
+include::../examples/CustomStrategy.java[]
 ----
 
 ==== `AttributeExtractor`
@@ -175,13 +108,7 @@ Extracts a list of key/value pairs from requests and/or responses to be included
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.attributes.AttributeExtractor;
-
-@ApplicationScoped
-public class CustomAttributeExtractor implements AttributeExtractor {
-    // implementation
-}
+include::../examples/CustomAttributeExtractor.java[]
 ----
 
 ==== `CorrelationId`
@@ -190,13 +117,7 @@ Generates a correlation ID to link requests and responses. See the https://githu
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.CorrelationId;
-
-@ApplicationScoped
-public class CustomCorrelationId implements CorrelationId {
-    // implementation
-}
+include::../examples/CustomCorrelationId.java[]
 ----
 
 ==== `Sink`
@@ -205,11 +126,5 @@ A combination of `HttpLogFormatter` and `HttpLogWriter` that allows for more sop
 
 [source,java]
 ----
-import jakarta.enterprise.context.ApplicationScoped;
-import org.zalando.logbook.Sink;
-
-@ApplicationScoped
-public class CustomSink implements Sink {
-    // implementation
-}
+include::../examples/CustomSink.java[]
 ----

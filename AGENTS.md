@@ -27,6 +27,7 @@
 - Runtime config is defined in `LogbookConfiguration.java` and exposed via CDI beans.
 - External dependencies: Zalando Logbook, Quarkus core, Quarkus REST, Quarkus REST Jackson, Quarkus ARC.
 - Documentation follows Antora structure in `docs/`.
+  - Code samples should be placed in `docs/modules/ROOT/examples` and included in the documentation using the `include::` directive.
 
 ## Examples
 - To add a new config property, update `LogbookConfiguration.java` and document in `docs/modules/ROOT/pages/index.adoc`.
