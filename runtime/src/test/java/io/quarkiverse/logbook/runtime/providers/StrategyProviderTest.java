@@ -1,6 +1,7 @@
 package io.quarkiverse.logbook.runtime.providers;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -37,16 +38,14 @@ class StrategyProviderTest {
     void shouldProvideDefaultStrategy() {
         when(strategyConfig.strategy()).thenReturn("default");
         Strategy strategy = provider.strategy(logbookConfiguration);
-        assertNotNull(strategy);
-        assertInstanceOf(DefaultStrategy.class, strategy);
+        assertThat(strategy).isNotNull().isInstanceOf(DefaultStrategy.class);
     }
 
     @Test
     void shouldProvideWithoutBodyStrategy() {
         when(strategyConfig.strategy()).thenReturn("without-body");
         Strategy strategy = provider.strategy(logbookConfiguration);
-        assertNotNull(strategy);
-        assertInstanceOf(WithoutBodyStrategy.class, strategy);
+        assertThat(strategy).isNotNull().isInstanceOf(WithoutBodyStrategy.class);
     }
 
     @Test
@@ -54,8 +53,7 @@ class StrategyProviderTest {
         when(strategyConfig.strategy()).thenReturn("status-at-least");
         when(logbookConfiguration.minimumStatus()).thenReturn(400);
         Strategy strategy = provider.strategy(logbookConfiguration);
-        assertNotNull(strategy);
-        assertInstanceOf(StatusAtLeastStrategy.class, strategy);
+        assertThat(strategy).isNotNull().isInstanceOf(StatusAtLeastStrategy.class);
     }
 
     @Test
@@ -63,13 +61,13 @@ class StrategyProviderTest {
         when(strategyConfig.strategy()).thenReturn("body-only-if-status-at-least");
         when(logbookConfiguration.minimumStatus()).thenReturn(500);
         Strategy strategy = provider.strategy(logbookConfiguration);
-        assertNotNull(strategy);
-        assertInstanceOf(BodyOnlyIfStatusAtLeastStrategy.class, strategy);
+        assertThat(strategy).isNotNull().isInstanceOf(BodyOnlyIfStatusAtLeastStrategy.class);
     }
 
     @Test
     void shouldThrowExceptionForUnknownStrategy() {
         when(strategyConfig.strategy()).thenReturn("unknown-strategy");
-        assertThrows(IllegalArgumentException.class, () -> provider.strategy(logbookConfiguration));
+        assertThatThrownBy(() -> provider.strategy(logbookConfiguration))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -1,7 +1,6 @@
 package io.quarkiverse.logbook.runtime.providers;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
@@ -50,8 +49,7 @@ class AttributeExtractorProviderTest {
 
         AttributeExtractor extractor = provider.attributeExtractor();
 
-        assertNotNull(extractor, "AttributeExtractor should not be null");
-        assertInstanceOf(NoOpAttributeExtractor.class, extractor, "Should be an instance of NoOpAttributeExtractor");
+        assertThat(extractor).isNotNull().isInstanceOf(NoOpAttributeExtractor.class);
     }
 
     @Test
@@ -63,8 +61,7 @@ class AttributeExtractorProviderTest {
 
         AttributeExtractor extractor = provider.attributeExtractor();
 
-        assertNotNull(extractor);
-        assertInstanceOf(JwtFirstMatchingClaimExtractor.class, extractor);
+        assertThat(extractor).isNotNull().isInstanceOf(JwtFirstMatchingClaimExtractor.class);
     }
 
     @Test
@@ -75,8 +72,7 @@ class AttributeExtractorProviderTest {
 
         AttributeExtractor extractor = provider.attributeExtractor();
 
-        assertNotNull(extractor);
-        assertInstanceOf(JwtAllMatchingClaimsExtractor.class, extractor);
+        assertThat(extractor).isNotNull().isInstanceOf(JwtAllMatchingClaimsExtractor.class);
     }
 
     @Test
@@ -91,7 +87,6 @@ class AttributeExtractorProviderTest {
 
         AttributeExtractor extractor = provider.attributeExtractor();
 
-        assertNotNull(extractor);
-        assertInstanceOf(CompositeAttributeExtractor.class, extractor);
+        assertThat(extractor).isNotNull().isInstanceOf(CompositeAttributeExtractor.class);
     }
 }

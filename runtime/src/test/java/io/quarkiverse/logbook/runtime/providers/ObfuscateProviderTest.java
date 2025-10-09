@@ -1,7 +1,6 @@
 package io.quarkiverse.logbook.runtime.providers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -39,7 +38,7 @@ class ObfuscateProviderTest {
     void shouldProvideDefaultHeaderFilter() {
         when(obfuscateConfig.headers()).thenReturn(Optional.empty());
         HeaderFilter filter = provider.headerFilter();
-        assertNotNull(filter);
+        assertThat(filter).isNotNull();
     }
 
     @Test
@@ -47,14 +46,14 @@ class ObfuscateProviderTest {
         when(obfuscateConfig.headers()).thenReturn(Optional.of(List.of("X-Secret")));
         when(obfuscateConfig.replacement()).thenReturn("filtered");
         HeaderFilter filter = provider.headerFilter();
-        assertNotNull(filter);
+        assertThat(filter).isNotNull();
     }
 
     @Test
     void shouldProvideDefaultQueryFilter() {
         when(obfuscateConfig.parameters()).thenReturn(Optional.empty());
         QueryFilter filter = provider.queryFilter();
-        assertNotNull(filter);
+        assertThat(filter).isNotNull();
     }
 
     @Test
@@ -62,15 +61,14 @@ class ObfuscateProviderTest {
         when(obfuscateConfig.parameters()).thenReturn(Optional.of(List.of("token")));
         when(obfuscateConfig.replacement()).thenReturn("filtered");
         QueryFilter filter = provider.queryFilter();
-        assertNotNull(filter);
+        assertThat(filter).isNotNull();
     }
 
     @Test
     void shouldProvideDefaultPathFilter() {
         when(obfuscateConfig.paths()).thenReturn(Optional.empty());
         PathFilter filter = provider.pathFilter();
-        assertNotNull(filter);
-        assertEquals(PathFilter.none(), filter);
+        assertThat(filter).isNotNull().isEqualTo(PathFilter.none());
     }
 
     @Test
@@ -78,6 +76,6 @@ class ObfuscateProviderTest {
         when(obfuscateConfig.paths()).thenReturn(Optional.of(List.of("/api/secret")));
         when(obfuscateConfig.replacement()).thenReturn("filtered");
         PathFilter filter = provider.pathFilter();
-        assertNotNull(filter);
+        assertThat(filter).isNotNull();
     }
 }
