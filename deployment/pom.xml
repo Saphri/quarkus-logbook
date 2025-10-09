@@ -12,6 +12,15 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.quarkiverse.logbook</groupId>
+            <artifactId>quarkus-logbook</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-core-deployment</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc-deployment</artifactId>
         </dependency>
@@ -21,16 +30,11 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-jackson-deployment</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-client-deployment</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.quarkiverse.logbook</groupId>
-            <artifactId>quarkus-logbook</artifactId>
-            <version>${project.version}</version>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-jackson-deployment</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
