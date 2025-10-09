@@ -1,0 +1,84 @@
+== Configuration Examples
+
+Here are some examples of how to configure the Quarkus Logbook extension using `application.properties`.
+
+=== Formatting
+
+To change the log format to cURL style:
+
+[source,properties]
+----
+quarkus.logbook.format.style=curl
+----
+
+To change the log format to HTTP style:
+
+[source,properties]
+----
+quarkus.logbook.format.style=http
+----
+
+=== Obfuscation
+
+To obfuscate the `Authorization` and `X-Secret` headers:
+
+[source,properties]
+----
+quarkus.logbook.obfuscate.headers=Authorization,X-Secret
+----
+
+To obfuscate the `password` and `credit_card_number` fields in a JSON body:
+
+[source,properties]
+----
+quarkus.logbook.obfuscate.json-body-fields=password,credit_card_number
+----
+
+To obfuscate the `token` query parameter:
+
+[source,properties]
+----
+quarkus.logbook.obfuscate.parameters=token
+----
+
+=== Conditional Logging
+
+To only log requests to paths starting with `/api/`:
+
+[source,properties]
+----
+quarkus.logbook.predicate.include.path=/api/.*
+----
+
+To exclude logging for requests to `/health` and `/metrics`:
+
+[source,properties]
+----
+quarkus.logbook.predicate.exclude.path=/health,/metrics
+----
+
+To only log requests with a status code of 500 or greater:
+
+[source,properties]
+----
+quarkus.logbook.strategy=status-at-least
+quarkus.logbook.minimum-status=500
+----
+
+=== Body Truncation
+
+To truncate log bodies to a maximum of 1000 characters:
+
+[source,properties]
+----
+quarkus.logbook.write.max-body-size=1000
+----
+
+=== Log Chunking
+
+To split log messages into chunks of 4096 bytes:
+
+[source,properties]
+----
+quarkus.logbook.write.chunk-size=4096
+----

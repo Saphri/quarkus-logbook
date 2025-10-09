@@ -1,0 +1,191 @@
+== Customization
+
+By default, this extension provides a sensible auto-configuration for Logbook. However, you can easily customize nearly every aspect of its behavior by providing your own CDI beans.
+
+The `LogbookProvider` will automatically inject any CDI beans that implement the following Logbook interfaces.
+
+=== Providing a custom `Logbook` instance
+
+If you need complete control over the Logbook configuration, you can provide your own `Logbook` bean. This will disable the default auto-configuration.
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import org.zalando.logbook.Logbook;
+
+@ApplicationScoped
+public class CustomLogbookProvider {
+
+    @Produces
+    public Logbook customLogbook() {
+        return Logbook.builder()
+                // your custom configuration
+                .build();
+    }
+}
+----
+
+=== Customizing Filters
+
+You can add custom filters by creating CDI beans that implement the corresponding filter interfaces. You can have multiple beans for each filter type.
+
+==== `HeaderFilter`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.HeaderFilter;
+
+@ApplicationScoped
+public class CustomHeaderFilter implements HeaderFilter {
+    // implementation
+}
+----
+
+==== `PathFilter`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.PathFilter;
+
+@ApplicationScoped
+public class CustomPathFilter implements PathFilter {
+    // implementation
+}
+----
+
+==== `QueryFilter`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.QueryFilter;
+
+@ApplicationScoped
+public class CustomQueryFilter implements QueryFilter {
+    // implementation
+}
+----
+
+==== `BodyFilter`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.BodyFilter;
+
+@ApplicationScoped
+public class CustomBodyFilter implements BodyFilter {
+    // implementation
+}
+----
+
+==== `RequestFilter`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.RequestFilter;
+
+@ApplicationScoped
+public class CustomRequestFilter implements RequestFilter {
+    // implementation
+}
+----
+
+==== `ResponseFilter`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.ResponseFilter;
+
+@ApplicationScoped
+public class CustomResponseFilter implements ResponseFilter {
+    // implementation
+}
+----
+
+=== Other customizations
+
+You can also customize other parts of Logbook by providing beans for the following interfaces.
+
+==== `HttpLogFormatter`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.HttpLogFormatter;
+
+@ApplicationScoped
+public class CustomHttpLogFormatter implements HttpLogFormatter {
+    // implementation
+}
+----
+
+==== `HttpLogWriter`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.HttpLogWriter;
+
+@ApplicationScoped
+public class CustomHttpLogWriter implements HttpLogWriter {
+    // implementation
+}
+----
+
+==== `Strategy`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.Strategy;
+
+@ApplicationScoped
+public class CustomStrategy implements Strategy {
+    // implementation
+}
+----
+
+==== `AttributeExtractor`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.attributes.AttributeExtractor;
+
+@ApplicationScoped
+public class CustomAttributeExtractor implements AttributeExtractor {
+    // implementation
+}
+----
+
+==== `CorrelationId`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.CorrelationId;
+
+@ApplicationScoped
+public class CustomCorrelationId implements CorrelationId {
+    // implementation
+}
+----
+
+==== `Sink`
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import org.zalando.logbook.Sink;
+
+@ApplicationScoped
+public class CustomSink implements Sink {
+    // implementation
+}
+----
