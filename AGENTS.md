@@ -38,5 +38,9 @@
 - [Quarkiverse Wiki](https://github.com/quarkiverse/quarkiverse/wiki)
 - [Zalando Logbook](https://github.com/zalando/logbook)
 
+## Planning
+- For each task, create a `planning.md` file with a detailed plan.
+- Update the plan in `planning.md` as you work on the task.
+
 ---
 If any section is unclear or missing, please provide feedback to improve these instructions.
