@@ -21,7 +21,6 @@
 
 ## Testing Conventions
 - **Use AssertJ for assertions.** It provides more readable and fluent assertions compared to JUnit's `Assertions`.
-- **Mockito dependencies are included in `quarkus-junit5`** and do not need to be added explicitly to the POM.
 
 ## Key Conventions
 - All configuration properties for users are prefixed with `quarkus.logbook`.
