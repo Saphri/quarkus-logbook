@@ -82,3 +82,14 @@ To split log messages into chunks of 4096 bytes:
 ----
 quarkus.logbook.write.chunk-size=4096
 ----
+
+=== Attribute Extractor
+
+To extract the `subject` claim from a JWT token and add it to the log attributes with the key `Principal`:
+
+[source,properties]
+----
+quarkus.logbook.attribute-extractors.type=JwtFirstMatchingClaimExtractor
+quarkus.logbook.attribute-extractors.claim-names=sub,subject
+quarkus.logbook.attribute-extractors.claim-key=Principal
+----
