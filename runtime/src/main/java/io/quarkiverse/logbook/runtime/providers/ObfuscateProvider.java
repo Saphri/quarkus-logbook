@@ -5,6 +5,7 @@ import static org.zalando.logbook.core.QueryFilters.replaceQuery;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -62,7 +63,7 @@ public class ObfuscateProvider {
     @ApplicationScoped
     @DefaultBean
     public BodyFilter bodyFilter() {
-        final var fields = logbookConfiguration.obfuscate().jsonBodyFields().orElseGet(java.util.Set::of);
+        final var fields = logbookConfiguration.obfuscate().jsonBodyFields().orElseGet(Set::of);
         return fields.isEmpty() ? BodyFilter.none()
                 : new JacksonJsonFieldBodyFilter(fields, logbookConfiguration.obfuscate().replacement());
     }
