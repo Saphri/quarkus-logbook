@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.zalando.logbook.BodyFilter;
 import org.zalando.logbook.HeaderFilter;
 import org.zalando.logbook.PathFilter;
 import org.zalando.logbook.QueryFilter;
+import org.zalando.logbook.json.JacksonJsonFieldBodyFilter;
 
 import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 
@@ -77,5 +79,20 @@ class ObfuscateProviderTest {
         when(obfuscateConfig.replacement()).thenReturn("filtered");
         PathFilter filter = provider.pathFilter();
         assertThat(filter).isNotNull();
+    }
+
+    @Test
+    void shouldProvideDefaultBodyFilter() {
+        when(obfuscateConfig.jsonBodyFields()).thenReturn(Optional.empty());
+        BodyFilter filter = provider.bodyFilter();
+        assertThat(filter).isNotNull().isEqualTo(BodyFilter.none());
+    }
+
+    @Test
+    void shouldProvideCustomBodyFilter() {
+        when(obfuscateConfig.jsonBodyFields()).thenReturn(Optional.of(List.of("password")));
+        when(obfuscateConfig.replacement()).thenReturn("filtered");
+        BodyFilter filter = provider.bodyFilter();
+        assertThat(filter).isNotNull().isInstanceOf(JacksonJsonFieldBodyFilter.class);
     }
 }
