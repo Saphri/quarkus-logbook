@@ -103,7 +103,7 @@ public interface LogbookConfiguration {
         Optional<List<String>> headers();
 
         /**
-         * List of JSON body fields to be obfuscated.
+         * Set of JSON body fields to be obfuscated.
          */
         Optional<Set<String>> jsonBodyFields();
 
