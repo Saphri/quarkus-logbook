@@ -2,6 +2,7 @@ package io.quarkiverse.logbook.runtime.configuration;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
@@ -104,7 +105,7 @@ public interface LogbookConfiguration {
         /**
          * List of JSON body fields to be obfuscated.
          */
-        Optional<List<String>> jsonBodyFields();
+        Optional<Set<String>> jsonBodyFields();
 
         /**
          * List of parameter names that need obfuscation.

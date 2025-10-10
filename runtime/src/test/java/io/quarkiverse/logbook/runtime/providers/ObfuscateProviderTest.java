@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,7 +91,7 @@ class ObfuscateProviderTest {
 
     @Test
     void shouldProvideCustomBodyFilter() {
-        when(obfuscateConfig.jsonBodyFields()).thenReturn(Optional.of(List.of("password")));
+        when(obfuscateConfig.jsonBodyFields()).thenReturn(Optional.of(Set.of("password")));
         when(obfuscateConfig.replacement()).thenReturn("filtered");
         BodyFilter filter = provider.bodyFilter();
         assertThat(filter).isNotNull().isInstanceOf(JacksonJsonFieldBodyFilter.class);
