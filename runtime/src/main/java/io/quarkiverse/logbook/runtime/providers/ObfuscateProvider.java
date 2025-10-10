@@ -62,8 +62,8 @@ public class ObfuscateProvider {
     @ApplicationScoped
     @DefaultBean
     public BodyFilter bodyFilter() {
-        final var fields = logbookConfiguration.obfuscate().jsonBodyFields().orElseGet(List::of);
+        final var fields = logbookConfiguration.obfuscate().jsonBodyFields().orElseGet(java.util.Set::of);
         return fields.isEmpty() ? BodyFilter.none()
-                : new JacksonJsonFieldBodyFilter(new HashSet<>(fields), logbookConfiguration.obfuscate().replacement());
+                : new JacksonJsonFieldBodyFilter(fields, logbookConfiguration.obfuscate().replacement());
     }
 }
