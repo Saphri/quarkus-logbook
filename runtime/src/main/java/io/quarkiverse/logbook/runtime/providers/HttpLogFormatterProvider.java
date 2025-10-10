@@ -1,7 +1,6 @@
 package io.quarkiverse.logbook.runtime.providers;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.spi.CDI;
 
 import org.zalando.logbook.HttpLogFormatter;
 import org.zalando.logbook.core.CurlHttpLogFormatter;
@@ -18,11 +17,10 @@ public class HttpLogFormatterProvider {
 
     @ApplicationScoped
     @DefaultBean
-    public HttpLogFormatter format(final LogbookConfiguration logbookConfiguration) {
+    public HttpLogFormatter format(final LogbookConfiguration logbookConfiguration, final ObjectMapper objectMapper) {
         final var formatConfiguration = logbookConfiguration.format();
         switch (formatConfiguration.style()) {
             case "json":
-                final var objectMapper = CDI.current().select(ObjectMapper.class).get();
                 return new JsonHttpLogFormatter(objectMapper);
             case "http":
                 return new DefaultHttpLogFormatter();
