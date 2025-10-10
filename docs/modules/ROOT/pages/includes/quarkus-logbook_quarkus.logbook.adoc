@@ -120,7 +120,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-List of JSON body fields to be obfuscated.
+Set of JSON body fields to be obfuscated.
 
 
 ifdef::add-copy-button-to-env-var[]
