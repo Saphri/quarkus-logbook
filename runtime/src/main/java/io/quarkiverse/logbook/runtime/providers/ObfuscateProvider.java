@@ -9,12 +9,14 @@ import java.util.TreeSet;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
+import org.zalando.logbook.BodyFilter;
 import org.zalando.logbook.HeaderFilter;
 import org.zalando.logbook.PathFilter;
 import org.zalando.logbook.QueryFilter;
 import org.zalando.logbook.core.HeaderFilters;
 import org.zalando.logbook.core.PathFilters;
 import org.zalando.logbook.core.QueryFilters;
+import org.zalando.logbook.json.JacksonJsonFieldBodyFilter;
 
 import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkus.arc.DefaultBean;
@@ -55,5 +57,13 @@ public class ObfuscateProvider {
                         .map(path -> PathFilters.replace(path, logbookConfiguration.obfuscate().replacement()))
                         .reduce(PathFilter::merge)
                         .orElseGet(PathFilter::none);
+    }
+
+    @ApplicationScoped
+    @DefaultBean
+    public BodyFilter bodyFilter() {
+        final var fields = logbookConfiguration.obfuscate().jsonBodyFields().orElseGet(List::of);
+        return fields.isEmpty() ? BodyFilter.none()
+                : new JacksonJsonFieldBodyFilter(new HashSet<>(fields), logbookConfiguration.obfuscate().replacement());
     }
 }
