@@ -4,10 +4,8 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import jakarta.ws.rs.core.MediaType;
 
@@ -78,15 +76,14 @@ public class LogbookResourceTest {
 
         given()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body("""
-                        {"message":"Hello json","secret":"super-secret"}""")
+                .body(new JsonDto("Hello json", SECRET))
                 .when().post("/logbook/json")
                 .then()
                 .statusCode(200)
                 .body("message", is("Hello json"))
-                .body("secret", is("super-secret"));
+                .body("secret", is(SECRET));
 
-        List<LogRecord> logRecords = inMemoryLogHandler.getRecords();
+        final var logRecords = inMemoryLogHandler.getRecords();
         assertThat(logRecords).anyMatch(logRecord -> logRecord.getMessage().contains(
                 "{\"message\":\"Hello json\",\"secret\":\"XXX\"}"));
     }
