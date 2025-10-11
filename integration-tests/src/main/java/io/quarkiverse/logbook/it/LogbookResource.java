@@ -2,7 +2,9 @@ package io.quarkiverse.logbook.it;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
@@ -50,5 +52,14 @@ public class LogbookResource {
         final var answer = helloClient.sayHello("TopSecret");
         log.infof("client received: %s", answer);
         return "Client answered: " + answer;
+    }
+
+    @POST
+    @Path("/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JsonDto json(JsonDto dto) {
+        log.info("json invoked");
+        return dto;
     }
 }
