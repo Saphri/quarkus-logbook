@@ -196,6 +196,27 @@ endif::add-copy-button-to-env-var[]
 |string
 |`+++XXX+++`
 
+a| [[quarkus-logbook_quarkus-logbook-filter-form-request-mode]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-filter-form-request-mode[`quarkus.logbook.filter.form-request-mode`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.logbook.filter.form-request-mode+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Determines how form requests are handled. Valid values are: - body: Body is logged (default) - parameter: Body is logged (but it's reconstructed from parameters) - off: Body is not logged
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LOGBOOK_FILTER_FORM_REQUEST_MODE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LOGBOOK_FILTER_FORM_REQUEST_MODE+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`body`, `parameter`, `off`
+|`+++body+++`
+
 a| [[quarkus-logbook_quarkus-logbook-predicate-include-path]] [.property-path]##link:#quarkus-logbook_quarkus-logbook-predicate-include-path[`quarkus.logbook.predicate.include.path`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.logbook.predicate.include.path+++[]

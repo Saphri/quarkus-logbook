@@ -1,6 +1,8 @@
 package io.quarkiverse.logbook.deployment;
 
 import io.quarkiverse.logbook.runtime.LogbookProvider;
+import io.quarkiverse.logbook.runtime.LogbookRecorder;
+import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkiverse.logbook.runtime.providers.AttributeExtractorProvider;
 import io.quarkiverse.logbook.runtime.providers.HttpLogFormatterProvider;
 import io.quarkiverse.logbook.runtime.providers.ObfuscateProvider;
@@ -9,6 +11,8 @@ import io.quarkiverse.logbook.runtime.providers.StrategyProvider;
 import io.quarkiverse.logbook.runtime.spi.QuarkusClientLogger;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.ExecutionTime;
+import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.AdditionalIndexedClassesBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.RunTimeConfigurationDefaultBuildItem;
@@ -20,6 +24,12 @@ class LogbookExtensionProcessor {
     @BuildStep
     FeatureBuildItem feature() {
         return new FeatureBuildItem(FEATURE);
+    }
+
+    @BuildStep
+    @Record(ExecutionTime.RUNTIME_INIT)
+    void setFormRequestMode(LogbookRecorder recorder, LogbookConfiguration config) {
+        recorder.setFormRequestMode(config);
     }
 
     @BuildStep

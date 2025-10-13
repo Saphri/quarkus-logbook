@@ -35,6 +35,11 @@ public interface LogbookConfiguration {
     ObfuscateConfiguration obfuscate();
 
     /**
+     * Configuration properties for the filter.
+     */
+    FilterConfiguration filter();
+
+    /**
      * Configuration properties for the predicate.
      */
     PredicateConfiguration predicate();
@@ -169,5 +174,17 @@ public interface LogbookConfiguration {
          * The configuration property for the attribute extractor claim key.
          */
         Optional<String> claimKey();
+    }
+
+    public interface FilterConfiguration {
+        /**
+         * Determines how form requests are handled.
+         * Valid values are:
+         * - body: Body is logged (default)
+         * - parameter: Body is logged (but it's reconstructed from parameters)
+         * - off: Body is not logged
+         */
+        @WithDefault("BODY")
+        FormRequestMode formRequestMode();
     }
 }
