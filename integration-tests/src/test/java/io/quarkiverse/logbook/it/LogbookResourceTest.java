@@ -67,4 +67,15 @@ public class LogbookResourceTest {
                 .body("message", is("Hello json"))
                 .body("secret", is(SECRET));
     }
+
+    @Test
+    void testForm() {
+        given()
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .formParam("secret", SECRET)
+                .when().post("/logbook/form")
+                .then()
+                .statusCode(200)
+                .body(is("secret: " + SECRET));
+    }
 }

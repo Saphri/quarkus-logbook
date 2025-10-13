@@ -3,6 +3,7 @@ package io.quarkiverse.logbook.it;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -61,5 +62,14 @@ public class LogbookResource {
     public JsonDto json(JsonDto dto) {
         log.info("json invoked");
         return dto;
+    }
+
+    @POST
+    @Path("/form")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String form(@FormParam("secret") String secret) {
+        log.infof("form invoked with secret: %s", secret);
+        return "secret: " + secret;
     }
 }
