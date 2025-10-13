@@ -76,6 +76,6 @@ public class LogbookResourceTest {
                 .when().post("/logbook/form")
                 .then()
                 .statusCode(200)
-                .body(is("secret: " + SECRET));
+                .body(is("secret submitted"));
     }
 }
