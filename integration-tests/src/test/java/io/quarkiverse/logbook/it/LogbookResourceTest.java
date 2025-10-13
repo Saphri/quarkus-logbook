@@ -72,7 +72,7 @@ public class LogbookResourceTest {
     void testForm() {
         given()
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .formParam("secret", SECRET)
+                .formParam("password", SECRET)
                 .when().post("/logbook/form")
                 .then()
                 .statusCode(200)

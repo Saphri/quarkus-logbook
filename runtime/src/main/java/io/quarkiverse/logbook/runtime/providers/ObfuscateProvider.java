@@ -14,6 +14,7 @@ import org.zalando.logbook.BodyFilter;
 import org.zalando.logbook.HeaderFilter;
 import org.zalando.logbook.PathFilter;
 import org.zalando.logbook.QueryFilter;
+import org.zalando.logbook.core.BodyFilters;
 import org.zalando.logbook.core.HeaderFilters;
 import org.zalando.logbook.core.PathFilters;
 import org.zalando.logbook.core.QueryFilters;
@@ -64,7 +65,17 @@ public class ObfuscateProvider {
     @DefaultBean
     public BodyFilter bodyFilter() {
         final var fields = logbookConfiguration.obfuscate().jsonBodyFields().orElseGet(Set::of);
-        return fields.isEmpty() ? BodyFilter.none()
+        final var jsonBodyFilter = fields.isEmpty() ? BodyFilter.none()
                 : new JacksonJsonFieldBodyFilter(fields, logbookConfiguration.obfuscate().replacement());
+
+        return BodyFilter.merge(oauthRequest(), jsonBodyFilter);
+    }
+
+    private BodyFilter oauthRequest() {
+        final var properties = new HashSet<String>();
+        properties.add("client_secret");
+        properties.add("password");
+        properties.add("refresh_token");
+        return BodyFilters.replaceFormUrlEncodedProperty(properties, logbookConfiguration.obfuscate().replacement());
     }
 }
