@@ -69,7 +69,7 @@ public class LogbookResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
     public String form(@FormParam("secret") String secret) {
-        log.infof("form invoked with secret: %s", secret);
+        log.info("form invoked");
         return "secret submitted";
     }
 }
