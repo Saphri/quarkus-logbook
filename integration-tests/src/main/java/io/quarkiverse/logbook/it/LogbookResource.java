@@ -70,6 +70,6 @@ public class LogbookResource {
     @Produces(MediaType.TEXT_PLAIN)
     public String form(@FormParam("secret") String secret) {
         log.infof("form invoked with secret: %s", secret);
-        return "secret: " + secret;
+        return "secret submitted";
     }
 }
