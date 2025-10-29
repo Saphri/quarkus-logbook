@@ -12,6 +12,10 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpClientRequest;
 import io.vertx.core.http.HttpMethod;
 
+/**
+ * An implementation of {@link HttpRequest} that adapts a Vert.x {@link HttpClientRequest}.
+ * This class is used to represent an outgoing (local) HTTP request in a format that Logbook can process.
+ */
 public class LocalRequest implements HttpRequest {
 
     private final URI uri;
@@ -21,6 +25,14 @@ public class LocalRequest implements HttpRequest {
 
     private boolean withBody = false;
 
+    /**
+     * Constructs a new LocalRequest.
+     *
+     * @param uri the request URI.
+     * @param httpMethod the HTTP method.
+     * @param headers the HTTP headers.
+     * @param body the request body.
+     */
     public LocalRequest(final URI uri, final HttpMethod httpMethod, final HttpHeaders headers, final byte[] body) {
         this.uri = uri;
         this.httpMethod = httpMethod;
@@ -28,6 +40,13 @@ public class LocalRequest implements HttpRequest {
         this.body = body;
     }
 
+    /**
+     * Creates a new LocalRequest from a Vert.x {@link HttpClientRequest} and a {@link Buffer}.
+     *
+     * @param request the Vert.x HTTP client request.
+     * @param buffer the request body buffer.
+     * @return a new {@link LocalRequest} instance.
+     */
     public static HttpRequest create(final HttpClientRequest request, final Buffer buffer) {
         return new LocalRequest(
                 URI.create(request.absoluteURI()),

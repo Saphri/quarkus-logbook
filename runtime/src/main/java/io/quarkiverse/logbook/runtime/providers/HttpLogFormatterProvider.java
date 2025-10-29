@@ -13,8 +13,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkus.arc.DefaultBean;
 
+/**
+ * HttpLogFormatterProvider is a CDI producer that provides an {@link HttpLogFormatter} bean.
+ * This class is responsible for creating a log formatter based on the configured style in the
+ * Logbook configuration. It supports "json", "http", "curl", and "splunk" styles.
+ */
 public class HttpLogFormatterProvider {
 
+    /**
+     * Creates and configures an {@link HttpLogFormatter} bean based on the application's configuration.
+     *
+     * @param logbookConfiguration the Logbook configuration.
+     * @param objectMapper the Jackson object mapper, used for the JSON formatter.
+     * @return a configured {@link HttpLogFormatter} instance.
+     * @throws IllegalArgumentException if the configured style is unknown.
+     */
     @ApplicationScoped
     @DefaultBean
     public HttpLogFormatter format(final LogbookConfiguration logbookConfiguration, final ObjectMapper objectMapper) {

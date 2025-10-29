@@ -11,8 +11,21 @@ import org.zalando.logbook.core.WithoutBodyStrategy;
 import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkus.arc.DefaultBean;
 
+/**
+ * StrategyProvider is a CDI producer that provides a {@link Strategy} bean.
+ * This class is responsible for creating a logging strategy based on the configured strategy
+ * name in the Logbook configuration. It supports "default", "without-body", "status-at-least",
+ * and "body-only-if-status-at-least" strategies.
+ */
 public class StrategyProvider {
 
+    /**
+     * Creates and configures a {@link Strategy} bean based on the application's configuration.
+     *
+     * @param logbookConfiguration the Logbook configuration.
+     * @return a configured {@link Strategy} instance.
+     * @throws IllegalArgumentException if the configured strategy is unknown.
+     */
     @ApplicationScoped
     @DefaultBean
     public Strategy strategy(final LogbookConfiguration logbookConfiguration) {
