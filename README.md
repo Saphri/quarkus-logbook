@@ -1,27 +1,66 @@
-# Quarkus logbook
+# Quarkus Logbook
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.logbook/quarkus-logbook?logo=apache-maven&style=flat-square)](https://central.sonatype.com/artifact/io.quarkiverse.logbook/quarkus-logbook-parent)
 
-## Welcome to Quarkiverse!
+## Introduction
 
-Congratulations and thank you for creating a new Quarkus extension project in Quarkiverse!
+This extension integrates [Zalando Logbook](https://github.com/zalando/logbook) with [Quarkus](https://quarkus.io/). Logbook is an extensible Java library for HTTP request and response logging. It's designed to be used in microservice environments and provides a flexible and powerful way to log HTTP traffic.
 
-Feel free to replace this content with the proper description of your new project and necessary instructions how to use and contribute to it.
+This extension provides:
 
-You can find the basic info, Quarkiverse policies and conventions in [the Quarkiverse wiki](https://github.com/quarkiverse/quarkiverse/wiki).
+-   **Automatic HTTP Logging**: Automatically logs all incoming and outgoing HTTP requests and responses.
+-   **Flexible Configuration**: A rich set of configuration options to customize logging behavior, including formatting, obfuscation, and filtering.
+-   **CDI Integration**: Seamless integration with Quarkus's CDI container, allowing for easy customization and extension.
 
-In case you are creating a Quarkus extension project for the first time, please follow [Building My First Extension](https://quarkus.io/guides/building-my-first-extension) guide.
+## Getting Started
 
-Other useful articles related to Quarkus extension development can be found under the [Writing Extensions](https://quarkus.io/guides/#writing-extensions) guide category on the [Quarkus.io](https://quarkus.io) website.
+To use this extension, add the following dependency to your `pom.xml`:
 
-Thanks again, good luck and have fun!
+```xml
+<dependency>
+    <groupId>io.quarkiverse.logbook</groupId>
+    <artifactId>quarkus-logbook</artifactId>
+    <version>${quarkus-logbook.version}</version>
+</dependency>
+```
+
+### Configuration
+
+The extension can be configured using standard Quarkus configuration properties in your `application.properties` file. Here are some of the most common options:
+
+-   **Formatting**: Choose from different log formats, such as JSON, cURL, or HTTP.
+-   **Obfuscation**: Obfuscate sensitive data in headers, parameters, paths, and JSON bodies.
+-   **Filtering**: Include or exclude requests from logging based on their path and method.
+-   **Strategy**: Control how and when requests and responses are logged.
+
+For a full list of configuration properties, please refer to the [official documentation](https://docs.quarkiverse.io/quarkus-logbook/dev/index.html).
+
+### Example Configuration
+
+Here's an example of how you might configure Logbook in your `application.properties`:
+
+```properties
+# Use the JSON format for logs
+quarkus.logbook.format.style=json
+
+# Obfuscate the 'Authorization' and 'X-API-Key' headers
+quarkus.logbook.obfuscate.headers=Authorization,X-API-Key
+
+# Obfuscate the 'password' and 'credit_card_number' fields in JSON bodies
+quarkus.logbook.obfuscate.json-body-fields=password,credit_card_number
+
+# Exclude health checks from logging
+quarkus.logbook.predicate.exclude.path=/q/health
+```
 
 ## Documentation
 
-The documentation for this extension should be maintained as part of this repository and it is stored in the `docs/` directory.
+The full documentation for this extension can be found on the [Quarkiverse Docs website](https://docs.quarkiverse.io/quarkus-logbook/dev/index.html).
 
-The layout should follow the [Antora's Standard File and Directory Set](https://docs.antora.org/antora/2.3/standard-directories/).
+## Contributing
 
-Once the docs are ready to be published, please open a PR including this repository in the [Quarkiverse Docs Antora playbook](https://github.com/quarkiverse/quarkiverse-docs/blob/main/antora-playbook.yml#L7). See an example [here](https://github.com/quarkiverse/quarkiverse-docs/pull/1)
+Contributions are welcome! If you find a bug or have a feature request, please open an issue. If you'd like to contribute code, please open a pull request.
 
-Your documentation will then be published to the <https://docs.quarkiverse.io/> website.
+## License
+
+This project is licensed under the Apache License, Version 2.0. See the [LICENSE](LICENSE) file for details.
