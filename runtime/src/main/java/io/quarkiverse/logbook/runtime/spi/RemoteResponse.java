@@ -9,6 +9,10 @@ import org.zalando.logbook.Origin;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpClientResponse;
 
+/**
+ * An implementation of {@link HttpResponse} that adapts a Vert.x {@link HttpClientResponse}.
+ * This class is used to represent an incoming (remote) HTTP response in a format that Logbook can process.
+ */
 public class RemoteResponse implements HttpResponse {
     private final int status;
     private final HttpHeaders headers;
@@ -16,12 +20,26 @@ public class RemoteResponse implements HttpResponse {
 
     private boolean withBody = false;
 
+    /**
+     * Constructs a new RemoteResponse.
+     *
+     * @param status the HTTP status code.
+     * @param headers the HTTP headers.
+     * @param body the response body.
+     */
     public RemoteResponse(final int status, final HttpHeaders headers, final byte[] body) {
         this.status = status;
         this.headers = headers;
         this.body = body;
     }
 
+    /**
+     * Creates a new RemoteResponse from a Vert.x {@link HttpClientResponse} and a {@link Buffer}.
+     *
+     * @param response the Vert.x HTTP client response.
+     * @param body the response body buffer.
+     * @return a new {@link RemoteResponse} instance.
+     */
     public static HttpResponse create(final HttpClientResponse response, final Buffer body) {
         return new RemoteResponse(
                 response.statusCode(),
