@@ -15,7 +15,12 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The strategy to use for logging requests and responses. Valid values are: - default: Log everything (default) - without-body: Log everything except bodies - status-at-least: Log only if status >= minimum-status (default 400) - body-only-if-status-at-least: Log request without body, then log both request and response with bodies only if status >= minimum-status (default 400)
+The strategy to use for logging requests and responses. Valid values are:
+
+ - `default`: Log everything.
+ - `without-body`: Log everything except bodies.
+ - `status-at-least`: Log only if the response status is >= minimumStatus.
+ - `body-only-if-status-at-least`: Log the request without a body, and then log both the request and response with bodies only if the response status is >= minimumStatus.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -36,7 +41,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Splits log lines into smaller chunks of size up-to chunk-size. Default is 0, which means no chunking.
+Splits log lines into smaller chunks of a given size. A value of 0 (the default) disables chunking.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -57,7 +62,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Truncates the body up to max-body-size characters and appends .... Default is -1, which means no truncation.
+Truncates the body to a given number of characters and appends "...". A value of -1 (the default) disables truncation.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -78,7 +83,12 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The style to use for formatting the log messages. Valid values are: - json: JSON format (default) - curl: cURL format - http: HTTP format - splunk: Splunk format
+The style to use for formatting log messages. Valid values are:
+
+ - `json`: JSON format (default).
+ - `curl`: cURL command format.
+ - `http`: HTTP message format.
+ - `splunk`: Splunk-friendly format.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -99,7 +109,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-List of header names that need obfuscation.
+A list of header names to be obfuscated. By default, "Authorization" is obfuscated.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -120,7 +130,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Set of JSON body fields to be obfuscated.
+A set of JSON body fields to be obfuscated.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -141,7 +151,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-List of parameter names that need obfuscation.
+A list of parameter names to be obfuscated. By default, "access_token" is obfuscated.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -162,7 +172,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-List of paths that need obfuscation. Check Filtering for syntax.
+A list of URL paths to be obfuscated.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -183,7 +193,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-A value to be used instead of an obfuscated one.
+The value to be used as a replacement for obfuscated data. The default is "XXX".
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -204,7 +214,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The path to filter.
+The URL path to filter.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -225,7 +235,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-HTTP methods to filter.
+A list of HTTP methods to filter for the given path.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -246,7 +256,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The path to filter.
+The URL path to filter.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -267,7 +277,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-HTTP methods to filter.
+A list of HTTP methods to filter for the given path.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -288,7 +298,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Minimum status to enable logging (status-at-least and body-only-if-status-at-least). Default is 400.
+Minimum status code to enable logging for strategies that depend on it. This is used by the "status-at-least" and "body-only-if-status-at-least" strategies. The default is 400.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -309,7 +319,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Attribute extractor type (currently JwtFirstMatchingClaimExtractor or JwtAllMatchingClaimsExtractor)
+The type of attribute extractor to use. Currently supports "JwtFirstMatchingClaimExtractor" and "JwtAllMatchingClaimsExtractor".
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -330,7 +340,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Configuration properties for the attribute extractor claim names.
+A list of claim names to be extracted from the JWT.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -351,7 +361,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The configuration property for the attribute extractor claim key.
+The key to be used for the extracted claim in the log.
 
 
 ifdef::add-copy-button-to-env-var[]
