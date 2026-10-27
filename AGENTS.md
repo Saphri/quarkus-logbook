@@ -16,15 +16,15 @@ The `integration-tests` module skips Failsafe tests by default. `LogbookResource
 
 ## Architecture
 
-The root POM builds the Quarkus extension from two core modules: `runtime` holds the runtime configuration and CDI producers, and `deployment` provides Quarkus build steps. The `integration-tests` modules are added by default Maven profiles.
+The root POM builds the Quarkus extension from two core modules: `runtime` holds the runtime configuration and CDI providers, and `deployment` provides Quarkus build steps. The `integration-tests` module is added by a default Maven profile.
 
-At build time, `LogbookExtensionProcessor` registers the runtime producers and supporting classes as CDI beans, indexes Logbook types, and sets Quarkus logging and REST-client defaults. At runtime, `LogbookConfiguration` maps `quarkus.logbook.*` properties; provider classes create the strategy, filters, formatters, predicates, and attribute extractors. `LogbookProvider` assembles those components into the `Logbook` instance and default sink/writer. Most provider beans use `@DefaultBean`, so applications can replace them with custom CDI beans.
+At build time, `LogbookExtensionProcessor` registers the runtime providers and supporting classes as CDI beans, indexes Logbook types, and sets Quarkus logging and REST-client defaults. At runtime, `LogbookConfiguration` maps `quarkus.logbook.*` properties; provider classes create the strategy, filters, formatters, predicates, and attribute extractors. `LogbookProvider` assembles those components into the `Logbook` instance and default sink/writer. Most provider beans use `@DefaultBean`, so applications can replace them with custom CDI beans.
 
 `deployment` contains extension-level tests using `QuarkusUnitTest`; `runtime` contains focused unit tests; `integration-tests` exercises HTTP server and client behavior in a Quarkus application.
 
 ## Repository-specific conventions
 
-- Configuration is runtime-phase SmallRye Config mapping in `runtime/.../configuration/LogbookConfiguration.java`. Add user-facing settings beneath the `quarkus.logbook` prefix and document their meaning in mapping Javadocs; the docs build generates the configuration reference included by `docs/modules/ROOT/pages/index.adoc`.
+- Configuration is runtime-phase SmallRye Config mapping in `runtime/.../configuration/LogbookConfiguration.java`. Add user-facing settings beneath the `quarkus.logbook` prefix and document their meaning in mapping Javadocs;
 - Keep configurable behavior in the provider classes and wire new extension-owned CDI beans through `LogbookExtensionProcessor`. Use `@DefaultBean` for defaults intended to be replaceable by application beans.
 - Preserve filter composition and precedence semantics: custom filters participate in the assembled Logbook, configured exclusion predicates take precedence over inclusion predicates, and body truncation runs after other body filters.
 - Runtime unit tests use JUnit 5, Mockito, and AssertJ. Extension boot tests use `QuarkusUnitTest`; end-to-end HTTP tests use RestAssured with `@QuarkusTest` or `@QuarkusIntegrationTest`.
