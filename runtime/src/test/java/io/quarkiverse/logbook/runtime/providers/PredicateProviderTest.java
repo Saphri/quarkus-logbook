@@ -91,6 +91,20 @@ class PredicateProviderTest {
     }
 
     @Test
+    void shouldPreferExcludeOverInclude() {
+        when(includePredicate.path()).thenReturn("/api/keep");
+        when(includePredicate.methods()).thenReturn(Optional.empty());
+        when(excludePredicate.path()).thenReturn("/api/keep");
+        when(excludePredicate.methods()).thenReturn(Optional.empty());
+        when(predicateConfig.includes()).thenReturn(Optional.of(List.of(includePredicate)));
+        when(predicateConfig.excludes()).thenReturn(Optional.of(List.of(excludePredicate)));
+        when(request.getPath()).thenReturn("/api/keep");
+
+        Predicate<HttpRequest> predicate = provider.condition(predicateConfig);
+        assertThat(predicate.test(request)).isFalse();
+    }
+
+    @Test
     void shouldFilterByMethod() {
         when(includePredicate.path()).thenReturn("/api/test");
         when(includePredicate.methods()).thenReturn(Optional.of(List.of("GET")));
