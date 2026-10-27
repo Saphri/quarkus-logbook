@@ -1,3 +1,0 @@
-* xref:index.adoc[Getting started]
-* xref:config-examples.adoc[Configuration Examples]
-* xref:customization.adoc[Customization]

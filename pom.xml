@@ -14,8 +14,9 @@
     <name>Quarkus logbook - Parent</name>
 
     <modules>
-        <module>deployment</module>
         <module>runtime</module>
+        <module>deployment</module>
+        <module>integration-tests</module>
     </modules>
 
     <scm>
@@ -74,39 +75,7 @@
                         <parameters>true</parameters>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-config-doc-maven-plugin</artifactId>
-                    <version>${quarkus.version}</version>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>
-
-    <profiles>
-        <profile>
-            <id>docs</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>!true</value>
-                </property>
-            </activation>
-            <modules>
-                <module>docs</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>it</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>!true</value>
-                </property>
-            </activation>
-            <modules>
-                <module>integration-tests</module>
-            </modules>
-        </profile>
-    </profiles>
 </project>
