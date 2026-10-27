@@ -14,7 +14,7 @@ import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkus.arc.DefaultBean;
 
 /**
- * HttpLogFormatterProvider is a CDI producer that provides an {@link HttpLogFormatter} bean.
+ * HttpLogFormatterProvider is a CDI provider that provides an {@link HttpLogFormatter} bean.
  * This class is responsible for creating a log formatter based on the configured style in the
  * Logbook configuration. It supports "json", "http", "curl", and "splunk" styles.
  */

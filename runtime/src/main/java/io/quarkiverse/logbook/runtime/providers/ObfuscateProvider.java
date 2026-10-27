@@ -24,7 +24,7 @@ import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkus.arc.DefaultBean;
 
 /**
- * ObfuscateProvider is a CDI producer that provides beans for obfuscating sensitive data.
+ * ObfuscateProvider is a CDI provider that provides beans for obfuscating sensitive data.
  * This class is responsible for creating various Logbook filters, such as {@link HeaderFilter},
  * {@link QueryFilter}, {@link PathFilter}, and {@link BodyFilter}, based on the application's
  * configuration. These filters help prevent sensitive information from being written to the logs.

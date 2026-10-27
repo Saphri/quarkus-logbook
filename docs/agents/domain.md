@@ -19,9 +19,8 @@ Single-context repo (this repo):
 ├── docs/adr/
 │   ├── 0001-<decision>.md
 │   └── 0002-<decision>.md
-├── runtime/            # runtime configuration and CDI producers
-├── deployment/         # Quarkus build steps
-└── docs/modules/ROOT/  # Antora documentation
+├── runtime/            # runtime configuration and CDI providers
+└── deployment/         # Quarkus build steps
 ```
 
 ## Use the glossary's vocabulary
