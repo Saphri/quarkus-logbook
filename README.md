@@ -67,6 +67,10 @@ quarkus.logbook.obfuscate.json-body-fields=password,credit_card_number
 
 # Exclude health checks from logging
 quarkus.logbook.predicate.exclude.path=/q/health
+
+# With a status-dependent strategy, the threshold lives under the strategy section
+quarkus.logbook.strategy=status-at-least
+quarkus.logbook.strategy.minimum-status=400
 ```
 
 ## Documentation

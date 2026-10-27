@@ -17,29 +17,25 @@ import org.zalando.logbook.HeaderFilter;
 import org.zalando.logbook.PathFilter;
 import org.zalando.logbook.QueryFilter;
 
-import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
+import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.ObfuscateConfiguration;
 
 @ExtendWith(MockitoExtension.class)
 class ObfuscateProviderTest {
 
     @Mock
-    private LogbookConfiguration logbookConfiguration;
-
-    @Mock
-    private LogbookConfiguration.ObfuscateConfiguration obfuscateConfig;
+    private ObfuscateConfiguration obfuscateConfig;
 
     private ObfuscateProvider provider;
 
     @BeforeEach
     void setUp() {
-        provider = new ObfuscateProvider(logbookConfiguration);
-        when(logbookConfiguration.obfuscate()).thenReturn(obfuscateConfig);
+        provider = new ObfuscateProvider();
     }
 
     @Test
     void shouldProvideDefaultHeaderFilter() {
         when(obfuscateConfig.headers()).thenReturn(Optional.empty());
-        HeaderFilter filter = provider.headerFilter();
+        HeaderFilter filter = provider.headerFilter(obfuscateConfig);
         assertThat(filter).isNotNull();
     }
 
@@ -47,14 +43,14 @@ class ObfuscateProviderTest {
     void shouldProvideCustomHeaderFilter() {
         when(obfuscateConfig.headers()).thenReturn(Optional.of(List.of("X-Secret")));
         when(obfuscateConfig.replacement()).thenReturn("filtered");
-        HeaderFilter filter = provider.headerFilter();
+        HeaderFilter filter = provider.headerFilter(obfuscateConfig);
         assertThat(filter).isNotNull();
     }
 
     @Test
     void shouldProvideDefaultQueryFilter() {
         when(obfuscateConfig.parameters()).thenReturn(Optional.empty());
-        QueryFilter filter = provider.queryFilter();
+        QueryFilter filter = provider.queryFilter(obfuscateConfig);
         assertThat(filter).isNotNull();
     }
 
@@ -62,14 +58,14 @@ class ObfuscateProviderTest {
     void shouldProvideCustomQueryFilter() {
         when(obfuscateConfig.parameters()).thenReturn(Optional.of(List.of("token")));
         when(obfuscateConfig.replacement()).thenReturn("filtered");
-        QueryFilter filter = provider.queryFilter();
+        QueryFilter filter = provider.queryFilter(obfuscateConfig);
         assertThat(filter).isNotNull();
     }
 
     @Test
     void shouldProvideDefaultPathFilter() {
         when(obfuscateConfig.paths()).thenReturn(Optional.empty());
-        PathFilter filter = provider.pathFilter();
+        PathFilter filter = provider.pathFilter(obfuscateConfig);
         assertThat(filter).isNotNull().isEqualTo(PathFilter.none());
     }
 
@@ -77,14 +73,14 @@ class ObfuscateProviderTest {
     void shouldProvideCustomPathFilter() {
         when(obfuscateConfig.paths()).thenReturn(Optional.of(List.of("/api/secret")));
         when(obfuscateConfig.replacement()).thenReturn("filtered");
-        PathFilter filter = provider.pathFilter();
+        PathFilter filter = provider.pathFilter(obfuscateConfig);
         assertThat(filter).isNotNull();
     }
 
     @Test
     void shouldProvideDefaultBodyFilter() {
         when(obfuscateConfig.jsonBodyFields()).thenReturn(Optional.empty());
-        BodyFilter filter = provider.bodyFilter();
+        BodyFilter filter = provider.bodyFilter(obfuscateConfig);
         assertThat(filter).isNotNull().isInstanceOf(BodyFilter.class);
     }
 
@@ -92,7 +88,7 @@ class ObfuscateProviderTest {
     void shouldProvideCustomBodyFilter() {
         when(obfuscateConfig.jsonBodyFields()).thenReturn(Optional.of(Set.of("password")));
         when(obfuscateConfig.replacement()).thenReturn("filtered");
-        BodyFilter filter = provider.bodyFilter();
+        BodyFilter filter = provider.bodyFilter(obfuscateConfig);
         assertThat(filter).isNotNull().isInstanceOf(BodyFilter.class);
     }
 }

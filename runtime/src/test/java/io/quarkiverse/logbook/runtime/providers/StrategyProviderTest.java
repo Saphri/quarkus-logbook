@@ -21,9 +21,6 @@ import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 class StrategyProviderTest {
 
     @Mock
-    private LogbookConfiguration logbookConfiguration;
-
-    @Mock
     private LogbookConfiguration.StrategyConfiguration strategyConfig;
 
     private StrategyProvider provider;
@@ -31,43 +28,42 @@ class StrategyProviderTest {
     @BeforeEach
     void setUp() {
         provider = new StrategyProvider();
-        when(logbookConfiguration.strategy()).thenReturn(strategyConfig);
     }
 
     @Test
     void shouldProvideDefaultStrategy() {
         when(strategyConfig.strategy()).thenReturn("default");
-        Strategy strategy = provider.strategy(logbookConfiguration);
+        Strategy strategy = provider.strategy(strategyConfig);
         assertThat(strategy).isNotNull().isInstanceOf(DefaultStrategy.class);
     }
 
     @Test
     void shouldProvideWithoutBodyStrategy() {
         when(strategyConfig.strategy()).thenReturn("without-body");
-        Strategy strategy = provider.strategy(logbookConfiguration);
+        Strategy strategy = provider.strategy(strategyConfig);
         assertThat(strategy).isNotNull().isInstanceOf(WithoutBodyStrategy.class);
     }
 
     @Test
     void shouldProvideStatusAtLeastStrategy() {
         when(strategyConfig.strategy()).thenReturn("status-at-least");
-        when(logbookConfiguration.minimumStatus()).thenReturn(400);
-        Strategy strategy = provider.strategy(logbookConfiguration);
+        when(strategyConfig.minimumStatus()).thenReturn(400);
+        Strategy strategy = provider.strategy(strategyConfig);
         assertThat(strategy).isNotNull().isInstanceOf(StatusAtLeastStrategy.class);
     }
 
     @Test
     void shouldProvideBodyOnlyIfStatusAtLeastStrategy() {
         when(strategyConfig.strategy()).thenReturn("body-only-if-status-at-least");
-        when(logbookConfiguration.minimumStatus()).thenReturn(500);
-        Strategy strategy = provider.strategy(logbookConfiguration);
+        when(strategyConfig.minimumStatus()).thenReturn(500);
+        Strategy strategy = provider.strategy(strategyConfig);
         assertThat(strategy).isNotNull().isInstanceOf(BodyOnlyIfStatusAtLeastStrategy.class);
     }
 
     @Test
     void shouldThrowExceptionForUnknownStrategy() {
         when(strategyConfig.strategy()).thenReturn("unknown-strategy");
-        assertThatThrownBy(() -> provider.strategy(logbookConfiguration))
+        assertThatThrownBy(() -> provider.strategy(strategyConfig))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
