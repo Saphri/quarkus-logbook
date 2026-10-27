@@ -12,7 +12,7 @@ import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkus.arc.DefaultBean;
 
 /**
- * StrategyProvider is a CDI producer that provides a {@link Strategy} bean.
+ * StrategyProvider is a CDI provider that provides a {@link Strategy} bean.
  * This class is responsible for creating a logging strategy based on the configured strategy
  * name in the Logbook configuration. It supports "default", "without-body", "status-at-least",
  * and "body-only-if-status-at-least" strategies.

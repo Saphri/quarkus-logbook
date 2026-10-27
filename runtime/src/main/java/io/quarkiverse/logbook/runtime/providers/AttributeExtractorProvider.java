@@ -17,7 +17,7 @@ import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.Attribu
 import io.quarkus.arc.DefaultBean;
 
 /**
- * AttributeExtractorProvider is a CDI producer that provides an {@link AttributeExtractor} bean.
+ * AttributeExtractorProvider is a CDI provider that provides an {@link AttributeExtractor} bean.
  * This class is responsible for creating an attribute extractor based on the Logbook configuration.
  * It supports creating a {@link NoOpAttributeExtractor}, a single JWT-based extractor, or a
  * composite extractor if multiple configurations are provided.

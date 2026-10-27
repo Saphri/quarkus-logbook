@@ -33,7 +33,7 @@ import io.quarkus.arc.All;
 import io.quarkus.arc.DefaultBean;
 
 /**
- * LogbookProvider is a CDI producer that provides Logbook components as beans.
+ * LogbookProvider is a CDI provider that provides Logbook components as beans.
  * This class is responsible for creating and configuring the main {@link Logbook} instance,
  * as well as other components like {@link CorrelationId}, {@link HttpLogWriter}, and {@link Sink}.
  * These beans can be customized or replaced by user-provided beans.

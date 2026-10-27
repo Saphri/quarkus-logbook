@@ -13,7 +13,7 @@ import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.Logbook
 import io.quarkus.arc.DefaultBean;
 
 /**
- * PredicateProvider is a CDI producer that provides a {@link Predicate<HttpRequest>} bean.
+ * PredicateProvider is a CDI provider that provides a {@link Predicate<HttpRequest>} bean.
  * This predicate is used as a condition to determine whether a given HTTP request should be logged.
  * It is built based on the include and exclude rules defined in the Logbook configuration.
  */

@@ -44,7 +44,7 @@ public interface LogbookConfiguration {
     ObfuscateConfiguration obfuscate();
 
     /**
-     * Configuration properties for filtering requests.
+     * Configuration properties for deciding which requests are logged.
      * This allows you to include or exclude requests from being logged based on their path and method.
      */
     PredicateConfiguration predicate();
@@ -156,7 +156,7 @@ public interface LogbookConfiguration {
     }
 
     /**
-     * Configuration for filtering requests.
+     * Configuration of the predicates that decide which requests are logged.
      */
     public interface PredicateConfiguration {
         /**
@@ -176,7 +176,7 @@ public interface LogbookConfiguration {
     }
 
     /**
-     * A predicate definition for filtering requests.
+     * A predicate definition that decides whether requests are logged.
      */
     public interface LogbookPredicate {
         /**
