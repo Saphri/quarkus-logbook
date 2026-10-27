@@ -71,7 +71,7 @@ class LogbookProviderTest {
         provider = new LogbookProvider();
         messages = new ArrayList<String>();
         recorder = new RecordingSinkHelper(messages);
-        request = new LocalRequest(java.net.URI.create("http://example.com/api"), io.vertx.core.http.HttpMethod.GET,
+        request = new LocalRequest(URI.create("http://example.com/api"), HttpMethod.GET,
                 HttpHeaders.empty(), "hello12345678world".getBytes());
         response = new RemoteResponse(200, HttpHeaders.empty(), "hello12345678world".getBytes());
     }
@@ -83,7 +83,7 @@ class LogbookProviderTest {
     }
 
     @Test
-    void shouldTruncateAfterCustomBodyFilter() throws java.io.IOException {
+    void shouldTruncateAfterCustomBodyFilter() throws IOException {
         final BodyFilter shorten = (final String contentType, final String body) -> body.replaceAll("hello", "HI");
         when(writeConfig.maxBodySize()).thenReturn(10);
         final var logbook = assemble(request -> true, List.of(shorten));
@@ -92,45 +92,45 @@ class LogbookProviderTest {
         // The custom filter shortens the body from 18 to 15 characters first, and only afterwards
         // the result is truncated to the configured maximum size. Truncating first would have cut
         // the unfiltered body and left "hello" intact, so this also anchors the ordering.
-        assertThat(messages.get(1)).isEqualTo(java.util.Arrays.toString("HI12345678...".getBytes()));
+        assertThat(messages.get(1)).isEqualTo(Arrays.toString("HI12345678...".getBytes()));
     }
 
     @Test
-    void shouldTruncateWithoutOtherBodyFilters() throws java.io.IOException {
+    void shouldTruncateWithoutOtherBodyFilters() throws IOException {
         when(writeConfig.maxBodySize()).thenReturn(10);
         final var logbook = assemble(request -> true, List.of());
         logbook.process(request).write();
         assertThat(messages).hasSize(1);
-        assertThat(messages.get(0)).isEqualTo(java.util.Arrays.toString("hello12345...".getBytes()));
+        assertThat(messages.get(0)).isEqualTo(Arrays.toString("hello12345...".getBytes()));
     }
 
     @Test
-    void shouldNotTruncateWhenMaxBodySizeIsDisabled() throws java.io.IOException {
+    void shouldNotTruncateWhenMaxBodySizeIsDisabled() throws IOException {
         when(writeConfig.maxBodySize()).thenReturn(-1);
         final var logbook = assemble(request -> true, List.of());
         logbook.process(request).write();
-        assertThat(messages.get(0)).isEqualTo(java.util.Arrays.toString("hello12345678world".getBytes()));
+        assertThat(messages.get(0)).isEqualTo(Arrays.toString("hello12345678world".getBytes()));
     }
 
     @Test
-    void shouldTruncateAfterObfuscatingJsonBodyFields() throws java.io.IOException {
+    void shouldTruncateAfterObfuscatingJsonBodyFields() throws IOException {
         when(obfuscateConfig.jsonBodyFields()).thenReturn(Optional.of(Set.of("password")));
         when(obfuscateConfig.replacement()).thenReturn("filtered");
         final var obfuscate = new ObfuscateProvider().bodyFilter(obfuscateConfig);
         final var body = "{\"password\":\"supersecretvalue1234567890\"}";
-        final var jsonRequest = new LocalRequest(java.net.URI.create("http://example.com/api"),
-                io.vertx.core.http.HttpMethod.GET,
+        final var jsonRequest = new LocalRequest(URI.create("http://example.com/api"),
+                HttpMethod.GET,
                 HttpHeaders.of("Content-Type", "application/json"), body.getBytes());
         when(writeConfig.maxBodySize()).thenReturn(20);
         final var logbook = assemble(request -> true, List.of(obfuscate));
         logbook.process(jsonRequest).write();
         // The password value is obfuscated first (41 characters become 23), and only the obfuscated
         // body is truncated: the cut lands inside the replacement, which truncating first could not do.
-        assertThat(messages.get(0)).isEqualTo(java.util.Arrays.toString("{\"password\":\"filtere...".getBytes()));
+        assertThat(messages.get(0)).isEqualTo(Arrays.toString("{\"password\":\"filtere...".getBytes()));
     }
 
     @Test
-    void shouldNotLogWhenExclusionOverridesInclusionInAssembledLogbook() throws java.io.IOException {
+    void shouldNotLogWhenExclusionOverridesInclusionInAssembledLogbook() throws IOException {
         when(includePredicate.path()).thenReturn("/api");
         when(includePredicate.methods()).thenReturn(Optional.empty());
         when(excludePredicate.path()).thenReturn("/api");
@@ -147,7 +147,7 @@ class LogbookProviderTest {
     }
 
     @Test
-    void shouldNotLogWhenConditionDenies() throws java.io.IOException {
+    void shouldNotLogWhenConditionDenies() throws IOException {
         final Predicate<HttpRequest> deny = request -> false;
         when(writeConfig.maxBodySize()).thenReturn(-1);
         final var logbook = assemble(deny, List.of());
@@ -156,7 +156,7 @@ class LogbookProviderTest {
     }
 
     @Test
-    void shouldLogWhenConditionAllows() throws java.io.IOException {
+    void shouldLogWhenConditionAllows() throws IOException {
         final Predicate<HttpRequest> allow = request -> true;
         when(writeConfig.maxBodySize()).thenReturn(-1);
         final var logbook = assemble(allow, List.of());
@@ -165,26 +165,26 @@ class LogbookProviderTest {
     }
 
     @Test
-    void shouldNotWrapSinkWhenChunkSizeIsZero() throws java.io.IOException {
+    void shouldNotWrapSinkWhenChunkSizeIsZero() throws IOException {
         when(writeConfig.chunkSize()).thenReturn(0);
         final var sink = provider.sink(writeConfig, recorder, recorder);
         assertThat(sink).isInstanceOf(DefaultSink.class);
     }
 
     @Test
-    void shouldWrapSinkWithChunkingWhenChunkSizeIsPositive() throws java.io.IOException {
+    void shouldWrapSinkWithChunkingWhenChunkSizeIsPositive() throws IOException {
         when(writeConfig.chunkSize()).thenReturn(4);
         final var sink = provider.sink(writeConfig, recorder, recorder);
         assertThat(sink).isInstanceOf(ChunkingSink.class);
     }
 
     @Test
-    void shouldProvideDefaultCorrelationIdBean() throws java.io.IOException {
+    void shouldProvideDefaultCorrelationIdBean() throws IOException {
         assertThat(provider.correlationId()).isInstanceOf(DefaultCorrelationId.class);
     }
 
     @Test
-    void shouldProvideQuarkusWriterBean() throws java.io.IOException {
+    void shouldProvideQuarkusWriterBean() throws IOException {
         assertThat(provider.writer()).isInstanceOf(QuarkusHttpLogWriter.class);
     }
 }
