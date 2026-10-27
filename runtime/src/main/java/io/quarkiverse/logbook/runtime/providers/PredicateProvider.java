@@ -8,49 +8,43 @@ import jakarta.enterprise.context.ApplicationScoped;
 import org.zalando.logbook.HttpRequest;
 import org.zalando.logbook.core.Conditions;
 
-import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.LogbookPredicate;
+import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.PredicateConfiguration;
 import io.quarkus.arc.DefaultBean;
 
 /**
  * PredicateProvider is a CDI provider that provides a {@link Predicate<HttpRequest>} bean.
  * This predicate is used as a condition to determine whether a given HTTP request should be logged.
- * It is built based on the include and exclude rules defined in the Logbook configuration.
+ * It is built based on the include and exclude rules defined in the predicate section of the
+ * Logbook configuration.
  */
 public class PredicateProvider {
 
-    private final LogbookConfiguration logbookConfiguration;
-
-    /**
-     * Constructs a new PredicateProvider with the given Logbook configuration.
-     *
-     * @param logbookConfiguration the Logbook configuration.
-     */
-    public PredicateProvider(LogbookConfiguration logbookConfiguration) {
-        this.logbookConfiguration = logbookConfiguration;
-    }
-
     /**
      * Creates and configures a {@link Predicate<HttpRequest>} bean.
-     * The predicate is built by combining include and exclude rules from the configuration.
+     * The predicate is built by combining include and exclude rules from the predicate
+     * section of the configuration.
      * Excludes take precedence over includes.
      *
+     * @param predicateConfiguration the predicate configuration section.
      * @return a configured {@link Predicate<HttpRequest>} instance.
      */
     @ApplicationScoped
     @DefaultBean
-    public Predicate<HttpRequest> condition() {
-        return mergeWithExcludes(mergeWithIncludes($ -> true));
+    public Predicate<HttpRequest> condition(final PredicateConfiguration predicateConfiguration) {
+        return mergeWithExcludes(mergeWithIncludes($ -> true, predicateConfiguration), predicateConfiguration);
     }
 
     /**
      * Merges the given predicate with the exclude rules from the configuration.
      *
      * @param predicate the base predicate.
+     * @param predicateConfiguration the predicate configuration section.
      * @return a new predicate that incorporates the exclude rules.
      */
-    private Predicate<HttpRequest> mergeWithExcludes(final Predicate<HttpRequest> predicate) {
-        final var excludes = logbookConfiguration.predicate().excludes().orElseGet(List::of);
+    private Predicate<HttpRequest> mergeWithExcludes(final Predicate<HttpRequest> predicate,
+            final PredicateConfiguration predicateConfiguration) {
+        final var excludes = predicateConfiguration.excludes().orElseGet(List::of);
 
         return excludes.stream()
                 .map(this::convertToPredicate)
@@ -62,10 +56,12 @@ public class PredicateProvider {
      * Merges the given predicate with the include rules from the configuration.
      *
      * @param predicate the base predicate.
+     * @param predicateConfiguration the predicate configuration section.
      * @return a new predicate that incorporates the include rules.
      */
-    private Predicate<HttpRequest> mergeWithIncludes(final Predicate<HttpRequest> predicate) {
-        final var includes = logbookConfiguration.predicate().includes().orElseGet(List::of);
+    private Predicate<HttpRequest> mergeWithIncludes(final Predicate<HttpRequest> predicate,
+            final PredicateConfiguration predicateConfiguration) {
+        final var includes = predicateConfiguration.includes().orElseGet(List::of);
         return includes.stream()
                 .map(this::convertToPredicate)
                 .reduce(Predicate::or)

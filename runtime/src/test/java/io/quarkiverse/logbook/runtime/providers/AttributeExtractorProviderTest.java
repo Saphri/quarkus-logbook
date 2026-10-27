@@ -39,14 +39,14 @@ class AttributeExtractorProviderTest {
 
     @BeforeEach
     void setUp() {
-        provider = new AttributeExtractorProvider(logbookConfiguration, jsonMapper);
+        provider = new AttributeExtractorProvider();
     }
 
     @Test
     void shouldProvideNoOpExtractorWhenNoExtractorsConfigured() {
         when(logbookConfiguration.attributeExtractors()).thenReturn(Optional.empty());
 
-        AttributeExtractor extractor = provider.attributeExtractor();
+        AttributeExtractor extractor = provider.attributeExtractor(logbookConfiguration, jsonMapper);
 
         assertThat(extractor).isNotNull().isInstanceOf(NoOpAttributeExtractor.class);
     }
@@ -58,7 +58,7 @@ class AttributeExtractorProviderTest {
         when(firstExtractorConfig.claimKey()).thenReturn(Optional.of("subject"));
         when(logbookConfiguration.attributeExtractors()).thenReturn(Optional.of(List.of(firstExtractorConfig)));
 
-        AttributeExtractor extractor = provider.attributeExtractor();
+        AttributeExtractor extractor = provider.attributeExtractor(logbookConfiguration, jsonMapper);
 
         assertThat(extractor).isNotNull().isInstanceOf(JwtFirstMatchingClaimExtractor.class);
     }
@@ -69,7 +69,7 @@ class AttributeExtractorProviderTest {
         when(firstExtractorConfig.claimNames()).thenReturn(Collections.singletonList("aud"));
         when(logbookConfiguration.attributeExtractors()).thenReturn(Optional.of(List.of(firstExtractorConfig)));
 
-        AttributeExtractor extractor = provider.attributeExtractor();
+        AttributeExtractor extractor = provider.attributeExtractor(logbookConfiguration, jsonMapper);
 
         assertThat(extractor).isNotNull().isInstanceOf(JwtAllMatchingClaimsExtractor.class);
     }
@@ -84,7 +84,7 @@ class AttributeExtractorProviderTest {
         when(logbookConfiguration.attributeExtractors())
                 .thenReturn(Optional.of(List.of(firstExtractorConfig, secondExtractorConfig)));
 
-        AttributeExtractor extractor = provider.attributeExtractor();
+        AttributeExtractor extractor = provider.attributeExtractor(logbookConfiguration, jsonMapper);
 
         assertThat(extractor).isNotNull().isInstanceOf(CompositeAttributeExtractor.class);
     }

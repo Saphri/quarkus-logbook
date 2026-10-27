@@ -27,7 +27,7 @@ import org.zalando.logbook.core.ChunkingSink;
 import org.zalando.logbook.core.DefaultCorrelationId;
 import org.zalando.logbook.core.DefaultSink;
 
-import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
+import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.WriteConfiguration;
 import io.quarkiverse.logbook.runtime.spi.QuarkusHttpLogWriter;
 import io.quarkus.arc.All;
 import io.quarkus.arc.DefaultBean;
@@ -45,7 +45,7 @@ public class LogbookProvider {
      * This method injects all available Logbook filters and other components to build a fully
      * configured Logbook instance.
      *
-     * @param logbookConfiguration the Logbook configuration.
+     * @param writeConfiguration the write configuration section.
      * @param condition a predicate to conditionally enable or disable logging for a given request.
      * @param correlationId a generator for correlation IDs.
      * @param headerFilters a list of filters for HTTP headers.
@@ -62,7 +62,7 @@ public class LogbookProvider {
     @ApplicationScoped
     @DefaultBean
     public Logbook logbook(
-            final LogbookConfiguration logbookConfiguration,
+            final WriteConfiguration writeConfiguration,
             final Predicate<HttpRequest> condition,
             final CorrelationId correlationId,
             final @All List<HeaderFilter> headerFilters,
@@ -80,7 +80,7 @@ public class LogbookProvider {
                 .headerFilters(headerFilters)
                 .queryFilters(queryFilters)
                 .pathFilters(pathFilters)
-                .bodyFilters(mergeWithTruncation(bodyFilters, logbookConfiguration))
+                .bodyFilters(mergeWithTruncation(bodyFilters, writeConfiguration))
                 .requestFilters(requestFilters)
                 .responseFilters(responseFilters)
                 .strategy(strategy)
@@ -94,12 +94,12 @@ public class LogbookProvider {
      * The truncation filter is added to the end of the list to ensure it runs after all other filters.
      *
      * @param bodyFilters the list of body filters to merge.
-     * @param logbookConfiguration the Logbook configuration.
+     * @param writeConfiguration the write configuration section.
      * @return a new list of body filters with the truncation filter added, if applicable.
      */
     private Collection<BodyFilter> mergeWithTruncation(final List<BodyFilter> bodyFilters,
-            final LogbookConfiguration logbookConfiguration) {
-        final var maxBodySize = logbookConfiguration.write().maxBodySize();
+            final WriteConfiguration writeConfiguration) {
+        final var maxBodySize = writeConfiguration.maxBodySize();
         if (maxBodySize < 0) {
             return bodyFilters;
         }
@@ -140,20 +140,20 @@ public class LogbookProvider {
      * This can be replaced by a custom implementation.
      * The sink can be configured to chunk large log messages.
      *
-     * @param configuration the Logbook configuration.
+     * @param writeConfiguration the write configuration section.
      * @param httpLogFormatter the formatter for HTTP log messages.
      * @param httpLogWriter the writer for HTTP log messages.
      * @return a configured {@link Sink} instance.
      */
     @ApplicationScoped
     @DefaultBean
-    public Sink sink(final LogbookConfiguration configuration, final HttpLogFormatter httpLogFormatter,
+    public Sink sink(final WriteConfiguration writeConfiguration, final HttpLogFormatter httpLogFormatter,
             final HttpLogWriter httpLogWriter) {
         final var sink = new DefaultSink(
                 httpLogFormatter,
                 httpLogWriter);
-        if (configuration.write().chunkSize() > 0) {
-            return new ChunkingSink(sink, configuration.write().chunkSize());
+        if (writeConfiguration.chunkSize() > 0) {
+            return new ChunkingSink(sink, writeConfiguration.chunkSize());
         } else {
             return sink;
         }

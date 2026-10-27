@@ -50,14 +50,6 @@ public interface LogbookConfiguration {
     PredicateConfiguration predicate();
 
     /**
-     * Minimum status code to enable logging for strategies that depend on it.
-     * This is used by the "status-at-least" and "body-only-if-status-at-least" strategies.
-     * The default is 400.
-     */
-    @WithDefault("400")
-    int minimumStatus();
-
-    /**
      * Configuration properties for attribute extractors.
      * This allows for extracting attributes from JWTs and adding them to the log.
      */
@@ -81,6 +73,15 @@ public interface LogbookConfiguration {
         @WithDefault("default")
         @WithParentName
         String strategy();
+
+        /**
+         * The minimum status code at which the status-dependent strategies switch on their
+         * status-dependent behavior.
+         * This is used by the "status-at-least" and "body-only-if-status-at-least" strategies.
+         * The default is 400.
+         */
+        @WithDefault("400")
+        int minimumStatus();
     }
 
     /**
