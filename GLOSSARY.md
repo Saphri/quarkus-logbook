@@ -40,6 +40,10 @@ _Avoid_: status code, error threshold
 A class that supplies one Logbook component (a strategy, filters, a formatter, an extractor) as an injectable part. The extension's Provider for a component is replaceable by the application's own.
 _Avoid_: producer, factory
 
+**JSON mapper**:
+The injectable JSON codec shared by the parts that shape JSON: the JSON Formatter renders through it, JWT extractors read claims through it. One mapper per app; replaceable by the application's own.
+_Avoid_: ObjectMapper, parser, serializer
+
 **Sink**:
 Where a log entry surfaces: a Formatter and a Writer bound together, optionally wrapped in chunking for transports that cannot take long lines.
 _Avoid_: destination, output
