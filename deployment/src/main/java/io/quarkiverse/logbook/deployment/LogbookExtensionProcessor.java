@@ -1,5 +1,7 @@
 package io.quarkiverse.logbook.deployment;
 
+import org.jboss.logmanager.Level;
+
 import io.quarkiverse.logbook.runtime.LogbookProvider;
 import io.quarkiverse.logbook.runtime.providers.AttributeExtractorProvider;
 import io.quarkiverse.logbook.runtime.providers.HttpLogFormatterProvider;
@@ -12,6 +14,7 @@ import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.AdditionalIndexedClassesBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
+import io.quarkus.deployment.builditem.LogCategoryBuildItem;
 import io.quarkus.deployment.builditem.RunTimeConfigurationDefaultBuildItem;
 
 /**
@@ -22,6 +25,8 @@ import io.quarkus.deployment.builditem.RunTimeConfigurationDefaultBuildItem;
 class LogbookExtensionProcessor {
 
     private static final String FEATURE = "logbook";
+
+    private static final String LOGBOOK_CATEGORY = "org.zalando.logbook";
 
     /**
      * Creates a {@link FeatureBuildItem} to identify the Logbook extension.
@@ -35,25 +40,24 @@ class LogbookExtensionProcessor {
     }
 
     /**
-     * Sets the default minimum logging level for the Logbook category to TRACE.
-     * This ensures that all Logbook messages are captured by the logging framework.
+     * Establishes the default level of the Logbook category as TRACE, and the same default for the category
+     * minimum level. The {@link LogCategoryBuildItem} is the only place that owns both: Quarkus turns it into
+     * the runtime {@code quarkus.log.category."org.zalando.logbook".level} default and into a minimum level
+     * default, which keeps the level from being promoted to DEBUG and swallowing every Logbook entry.
      *
-     * @return a {@link RunTimeConfigurationDefaultBuildItem} with the default min-level.
+     * A built application filters further down than that. Its {@code LoggerNode} minimum level is fixed at
+     * startup from the {@code logging.initial-configurator.min-level} property, which Quarkus computes at
+     * build time out of the build time logging configuration; an extension cannot contribute to that
+     * configuration, so the floor it leaves for the Logbook category is the root minimum level. An
+     * application that wants Logbook entries in a built application must therefore set the build time
+     * {@code quarkus.log.category."org.zalando.logbook".min-level} to TRACE as well, and let its log
+     * handlers accept TRACE; see ADR 0002.
+     *
+     * @return a {@link LogCategoryBuildItem} for the Logbook category at TRACE, including its minimum level.
      */
     @BuildStep
-    RunTimeConfigurationDefaultBuildItem logbookLevelMinConfig() {
-        return new RunTimeConfigurationDefaultBuildItem("quarkus.log.category.\"org.zalando.logbook\".min-level", "TRACE");
-    }
-
-    /**
-     * Sets the default logging level for the Logbook category to TRACE.
-     * This ensures that all Logbook messages are logged at the TRACE level by default.
-     *
-     * @return a {@link RunTimeConfigurationDefaultBuildItem} with the default level.
-     */
-    @BuildStep
-    RunTimeConfigurationDefaultBuildItem logbookLevelConfig() {
-        return new RunTimeConfigurationDefaultBuildItem("quarkus.log.category.\"org.zalando.logbook\".level", "TRACE");
+    LogCategoryBuildItem logbookLogLevel() {
+        return new LogCategoryBuildItem(LOGBOOK_CATEGORY, Level.TRACE, true);
     }
 
     /**

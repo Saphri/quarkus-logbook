@@ -49,7 +49,7 @@ Where a log entry surfaces: a Formatter and a Writer bound together, optionally 
 _Avoid_: destination, output
 
 **Writer**:
-The bridge from a log entry into the app's logging framework. Entries surface under the Logbook logger category at TRACE, so that category's level is what switches logging on.
+The bridge from a log entry into the app's logging framework. Entries surface under the Logbook logger category at TRACE, so that category's level is what switches logging on. In a built application the framework first drops anything below the category's minimum logging level, which the application owns, so entries can be filtered before the Writer is reached.
 _Avoid_: logger, output
 
 **Formatter**:
