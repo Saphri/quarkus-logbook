@@ -85,13 +85,13 @@ class ObfuscateProviderTest {
     @Test
     void shouldObfuscateOAuthPropertiesInFormEncodedBody() {
         when(obfuscateConfig.jsonBodyFields()).thenReturn(Optional.empty());
-        when(obfuscateConfig.replacement()).thenReturn("XXX");
+        when(obfuscateConfig.replacement()).thenReturn("filtered");
         final var filter = provider.bodyFilter(obfuscateConfig);
         // The OAuth filter only acts on form-url-encoded bodies; the configured JSON fields are none here,
         // so a JSON body must pass through unchanged.
         assertThat(filter.filter("application/x-www-form-urlencoded",
                 "client_secret=shh&password=hunter2&refresh_token=r1&keep=me"))
-                .isEqualTo("client_secret=XXX&password=XXX&refresh_token=XXX&keep=me");
+                .isEqualTo("client_secret=filtered&password=filtered&refresh_token=filtered&keep=me");
         assertThat(filter.filter("application/json", "{\"secret\":\"s3cret\"}")).isEqualTo("{\"secret\":\"s3cret\"}");
     }
 
