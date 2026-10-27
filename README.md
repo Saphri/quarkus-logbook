@@ -32,8 +32,24 @@ The extension can be configured using standard Quarkus configuration properties 
 -   **Obfuscation**: Obfuscate sensitive data in headers, parameters, paths, and JSON bodies.
 -   **Filtering**: Include or exclude requests from logging based on their path and method.
 -   **Strategy**: Control how and when requests and responses are logged.
+-   **Log levels**: Entries are written at `TRACE` under the `org.zalando.logbook` logger category, so that category's level is what switches logging on.
 
 For a full list of configuration properties, please refer to the [official documentation](https://docs.quarkiverse.io/quarkus-logbook/dev/index.html).
+
+### Logging levels in a built application
+
+An in-process `@QuarkusTest` application logs `TRACE` out of the box, a built one does not: there the logging framework filters every category below its minimum level before the entry reaches the Writer, and that minimum level is fixed at build time. Lower it and let the handlers accept `TRACE`:
+
+```properties
+# Build time: let the Logbook category minimum level down to TRACE
+quarkus.log.category."org.zalando.logbook".min-level=TRACE
+
+# Let the log handlers accept TRACE
+quarkus.log.console.level=TRACE
+quarkus.log.file.level=TRACE
+```
+
+See [ADR 0002](docs/adr/0002-trace-writer-and-app-owned-minimum-level.md) for why the extension cannot set these itself.
 
 ### Example Configuration
 
