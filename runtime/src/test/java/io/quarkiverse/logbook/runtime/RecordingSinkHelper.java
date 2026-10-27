@@ -38,8 +38,8 @@ public class RecordingSinkHelper implements HttpLogFormatter, HttpLogWriter {
      * @return the body rendered as a string.
      */
     @Override
-    public String format(final Precorrelation precorrelation, final HttpRequest request) throws java.io.IOException {
-        return java.util.Arrays.toString(request.getBody());
+    public String format(final Precorrelation precorrelation, final HttpRequest request) throws IOException {
+        return Arrays.toString(request.getBody());
     }
 
     /**
@@ -50,8 +50,8 @@ public class RecordingSinkHelper implements HttpLogFormatter, HttpLogWriter {
      * @return the body rendered as a string.
      */
     @Override
-    public String format(final Correlation correlation, final HttpResponse response) throws java.io.IOException {
-        return java.util.Arrays.toString(response.getBody());
+    public String format(final Correlation correlation, final HttpResponse response) throws IOException {
+        return Arrays.toString(response.getBody());
     }
 
     /**
@@ -61,7 +61,7 @@ public class RecordingSinkHelper implements HttpLogFormatter, HttpLogWriter {
      * @param message the formatted message.
      */
     @Override
-    public void write(final Precorrelation precorrelation, final String message) throws java.io.IOException {
+    public void write(final Precorrelation precorrelation, final String message) throws IOException {
         messages.add(message);
     }
 
@@ -72,7 +72,7 @@ public class RecordingSinkHelper implements HttpLogFormatter, HttpLogWriter {
      * @param message the formatted message.
      */
     @Override
-    public void write(final Correlation correlation, final String message) throws java.io.IOException {
+    public void write(final Correlation correlation, final String message) throws IOException {
         messages.add(message);
     }
 }
