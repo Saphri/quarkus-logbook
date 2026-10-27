@@ -8,6 +8,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +27,12 @@ import org.zalando.logbook.core.DefaultCorrelationId;
 import org.zalando.logbook.core.DefaultSink;
 import org.zalando.logbook.core.DefaultStrategy;
 
+import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.LogbookPredicate;
+import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.ObfuscateConfiguration;
+import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.PredicateConfiguration;
 import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.WriteConfiguration;
+import io.quarkiverse.logbook.runtime.providers.ObfuscateProvider;
+import io.quarkiverse.logbook.runtime.providers.PredicateProvider;
 import io.quarkiverse.logbook.runtime.spi.LocalRequest;
 import io.quarkiverse.logbook.runtime.spi.QuarkusHttpLogWriter;
 import io.quarkiverse.logbook.runtime.spi.RemoteResponse;
@@ -36,6 +43,18 @@ class LogbookProviderTest {
 
     @Mock
     private WriteConfiguration writeConfig;
+
+    @Mock
+    private PredicateConfiguration predicateConfig;
+
+    @Mock
+    private LogbookPredicate includePredicate;
+
+    @Mock
+    private LogbookPredicate excludePredicate;
+
+    @Mock
+    private ObfuscateConfiguration obfuscateConfig;
 
     private LogbookProvider provider;
 
@@ -91,6 +110,40 @@ class LogbookProviderTest {
         final var logbook = assemble(request -> true, List.of());
         logbook.process(request).write();
         assertThat(messages.get(0)).isEqualTo(java.util.Arrays.toString("hello12345678world".getBytes()));
+    }
+
+    @Test
+    void shouldTruncateAfterObfuscatingJsonBodyFields() throws java.io.IOException {
+        when(obfuscateConfig.jsonBodyFields()).thenReturn(Optional.of(Set.of("password")));
+        when(obfuscateConfig.replacement()).thenReturn("filtered");
+        final var obfuscate = new ObfuscateProvider().bodyFilter(obfuscateConfig);
+        final var body = "{\"password\":\"supersecretvalue1234567890\"}";
+        final var jsonRequest = new LocalRequest(java.net.URI.create("http://example.com/api"),
+                io.vertx.core.http.HttpMethod.GET,
+                HttpHeaders.of("Content-Type", "application/json"), body.getBytes());
+        when(writeConfig.maxBodySize()).thenReturn(20);
+        final var logbook = assemble(request -> true, List.of(obfuscate));
+        logbook.process(jsonRequest).write();
+        // The password value is obfuscated first (41 characters become 23), and only the obfuscated
+        // body is truncated: the cut lands inside the replacement, which truncating first could not do.
+        assertThat(messages.get(0)).isEqualTo(java.util.Arrays.toString("{\"password\":\"filtere...".getBytes()));
+    }
+
+    @Test
+    void shouldNotLogWhenExclusionOverridesInclusionInAssembledLogbook() throws java.io.IOException {
+        when(includePredicate.path()).thenReturn("/api");
+        when(includePredicate.methods()).thenReturn(Optional.empty());
+        when(excludePredicate.path()).thenReturn("/api");
+        when(excludePredicate.methods()).thenReturn(Optional.empty());
+        when(predicateConfig.includes()).thenReturn(Optional.of(List.of(includePredicate)));
+        when(predicateConfig.excludes()).thenReturn(Optional.of(List.of(excludePredicate)));
+        final var condition = new PredicateProvider().condition(predicateConfig);
+        when(writeConfig.maxBodySize()).thenReturn(-1);
+        final var logbook = assemble(condition, List.of());
+        logbook.process(request).write().process(response).write();
+        // Both rules match the request; the exclusion must win, so nothing is logged. If includes
+        // took precedence this exchange would write two messages instead of none.
+        assertThat(messages).isEmpty();
     }
 
     @Test
