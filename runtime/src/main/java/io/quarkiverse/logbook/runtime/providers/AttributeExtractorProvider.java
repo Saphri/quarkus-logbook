@@ -10,11 +10,10 @@ import org.zalando.logbook.core.attributes.CompositeAttributeExtractor;
 import org.zalando.logbook.core.attributes.JwtAllMatchingClaimsExtractor;
 import org.zalando.logbook.core.attributes.JwtFirstMatchingClaimExtractor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.AttributeExtractorConfiguration;
 import io.quarkus.arc.DefaultBean;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * AttributeExtractorProvider is a CDI provider that provides an {@link AttributeExtractor} bean.
@@ -25,17 +24,17 @@ import io.quarkus.arc.DefaultBean;
 public class AttributeExtractorProvider {
 
     private final LogbookConfiguration logbookConfiguration;
-    private final ObjectMapper objectMapper;
+    private final JsonMapper jsonMapper;
 
     /**
-     * Constructs a new AttributeExtractorProvider with the given configuration and object mapper.
+     * Constructs a new AttributeExtractorProvider with the given configuration and JSON mapper.
      *
      * @param logbookConfiguration the Logbook configuration.
-     * @param objectMapper the Jackson object mapper for JSON processing.
+     * @param jsonMapper the Jackson 3 JSON mapper for JSON processing.
      */
-    public AttributeExtractorProvider(final LogbookConfiguration logbookConfiguration, final ObjectMapper objectMapper) {
+    public AttributeExtractorProvider(final LogbookConfiguration logbookConfiguration, final JsonMapper jsonMapper) {
         this.logbookConfiguration = logbookConfiguration;
-        this.objectMapper = objectMapper;
+        this.jsonMapper = jsonMapper;
     }
 
     /**
@@ -54,11 +53,11 @@ public class AttributeExtractorProvider {
             case 0:
                 return new NoOpAttributeExtractor();
             case 1:
-                return toExtractor(attributeExtractors.get(0), objectMapper);
+                return toExtractor(attributeExtractors.get(0), jsonMapper);
             default:
                 return new CompositeAttributeExtractor(
                         attributeExtractors.stream()
-                                .map(property -> toExtractor(property, objectMapper))
+                                .map(property -> toExtractor(property, jsonMapper))
                                 .toList());
         }
     }
@@ -67,21 +66,21 @@ public class AttributeExtractorProvider {
      * Converts an {@link AttributeExtractorConfiguration} into an {@link AttributeExtractor} instance.
      *
      * @param config the attribute extractor configuration.
-     * @param objectMapper the Jackson object mapper.
+     * @param jsonMapper the Jackson 3 JSON mapper.
      * @return a new {@link AttributeExtractor} instance.
      * @throws IllegalArgumentException if the extractor type is unknown.
      */
-    private AttributeExtractor toExtractor(final AttributeExtractorConfiguration config, final ObjectMapper objectMapper) {
+    private AttributeExtractor toExtractor(final AttributeExtractorConfiguration config, final JsonMapper jsonMapper) {
         switch (config.type()) {
             case "JwtFirstMatchingClaimExtractor":
                 return JwtFirstMatchingClaimExtractor.builder()
-                        .objectMapper(objectMapper)
+                        .jsonMapper(jsonMapper)
                         .claimNames(config.claimNames())
                         .claimKey(config.claimKey().orElse(null))
                         .build();
             case "JwtAllMatchingClaimsExtractor":
                 return JwtAllMatchingClaimsExtractor.builder()
-                        .objectMapper(objectMapper)
+                        .jsonMapper(jsonMapper)
                         .claimNames(config.claimNames())
                         .build();
             default:
