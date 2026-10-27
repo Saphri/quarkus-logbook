@@ -14,22 +14,20 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.zalando.logbook.HttpRequest;
 
-import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
+import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.LogbookPredicate;
+import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration.PredicateConfiguration;
 
 @ExtendWith(MockitoExtension.class)
 class PredicateProviderTest {
 
     @Mock
-    private LogbookConfiguration logbookConfiguration;
+    private PredicateConfiguration predicateConfig;
 
     @Mock
-    private LogbookConfiguration.PredicateConfiguration predicateConfig;
+    private LogbookPredicate includePredicate;
 
     @Mock
-    private LogbookConfiguration.LogbookPredicate includePredicate;
-
-    @Mock
-    private LogbookConfiguration.LogbookPredicate excludePredicate;
+    private LogbookPredicate excludePredicate;
 
     @Mock
     private HttpRequest request;
@@ -38,8 +36,7 @@ class PredicateProviderTest {
 
     @BeforeEach
     void setUp() {
-        provider = new PredicateProvider(logbookConfiguration);
-        when(logbookConfiguration.predicate()).thenReturn(predicateConfig);
+        provider = new PredicateProvider();
     }
 
     @Test
@@ -47,7 +44,7 @@ class PredicateProviderTest {
         when(predicateConfig.includes()).thenReturn(Optional.empty());
         when(predicateConfig.excludes()).thenReturn(Optional.empty());
 
-        Predicate<HttpRequest> predicate = provider.condition();
+        Predicate<HttpRequest> predicate = provider.condition(predicateConfig);
         assertThat(predicate.test(request)).isTrue();
     }
 
@@ -59,7 +56,7 @@ class PredicateProviderTest {
         when(predicateConfig.excludes()).thenReturn(Optional.empty());
         when(request.getPath()).thenReturn("/api/include");
 
-        Predicate<HttpRequest> predicate = provider.condition();
+        Predicate<HttpRequest> predicate = provider.condition(predicateConfig);
         assertThat(predicate.test(request)).isTrue();
     }
 
@@ -71,7 +68,7 @@ class PredicateProviderTest {
         when(predicateConfig.excludes()).thenReturn(Optional.of(List.of(excludePredicate)));
         when(request.getPath()).thenReturn("/api/exclude");
 
-        Predicate<HttpRequest> predicate = provider.condition();
+        Predicate<HttpRequest> predicate = provider.condition(predicateConfig);
         assertThat(predicate.test(request)).isFalse();
     }
 
@@ -84,7 +81,7 @@ class PredicateProviderTest {
         when(predicateConfig.includes()).thenReturn(Optional.of(List.of(includePredicate)));
         when(predicateConfig.excludes()).thenReturn(Optional.of(List.of(excludePredicate)));
 
-        Predicate<HttpRequest> predicate = provider.condition();
+        Predicate<HttpRequest> predicate = provider.condition(predicateConfig);
 
         when(request.getPath()).thenReturn("/api/include");
         assertThat(predicate.test(request)).isTrue();
@@ -100,7 +97,7 @@ class PredicateProviderTest {
         when(predicateConfig.includes()).thenReturn(Optional.of(List.of(includePredicate)));
         when(predicateConfig.excludes()).thenReturn(Optional.empty());
 
-        Predicate<HttpRequest> predicate = provider.condition();
+        Predicate<HttpRequest> predicate = provider.condition(predicateConfig);
 
         when(request.getPath()).thenReturn("/api/test");
         when(request.getMethod()).thenReturn("GET");

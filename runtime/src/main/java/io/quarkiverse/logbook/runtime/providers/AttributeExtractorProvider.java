@@ -23,31 +23,20 @@ import tools.jackson.databind.json.JsonMapper;
  */
 public class AttributeExtractorProvider {
 
-    private final LogbookConfiguration logbookConfiguration;
-    private final JsonMapper jsonMapper;
-
-    /**
-     * Constructs a new AttributeExtractorProvider with the given configuration and JSON mapper.
-     *
-     * @param logbookConfiguration the Logbook configuration.
-     * @param jsonMapper the Jackson 3 JSON mapper for JSON processing.
-     */
-    public AttributeExtractorProvider(final LogbookConfiguration logbookConfiguration, final JsonMapper jsonMapper) {
-        this.logbookConfiguration = logbookConfiguration;
-        this.jsonMapper = jsonMapper;
-    }
-
     /**
      * Creates and configures an {@link AttributeExtractor} bean based on the application's configuration.
      * If no attribute extractors are configured, a {@link NoOpAttributeExtractor} is returned.
      * If one is configured, a corresponding extractor is created.
      * If multiple are configured, a {@link CompositeAttributeExtractor} is created.
      *
+     * @param logbookConfiguration the Logbook configuration.
+     * @param jsonMapper the Jackson 3 JSON mapper for JSON processing.
      * @return a configured {@link AttributeExtractor} instance.
      */
     @ApplicationScoped
     @DefaultBean
-    public AttributeExtractor attributeExtractor() {
+    public AttributeExtractor attributeExtractor(final LogbookConfiguration logbookConfiguration,
+            final JsonMapper jsonMapper) {
         final var attributeExtractors = logbookConfiguration.attributeExtractors().orElseGet(List::of);
         switch (attributeExtractors.size()) {
             case 0:

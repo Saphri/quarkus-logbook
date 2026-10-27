@@ -3,6 +3,7 @@ package io.quarkiverse.logbook.deployment;
 import org.jboss.logmanager.Level;
 
 import io.quarkiverse.logbook.runtime.LogbookProvider;
+import io.quarkiverse.logbook.runtime.configuration.ConfigurationSections;
 import io.quarkiverse.logbook.runtime.providers.AttributeExtractorProvider;
 import io.quarkiverse.logbook.runtime.providers.HttpLogFormatterProvider;
 import io.quarkiverse.logbook.runtime.providers.JsonMapperProvider;
@@ -95,6 +96,6 @@ class LogbookExtensionProcessor {
     public AdditionalBeanBuildItem providers() {
         return new AdditionalBeanBuildItem(ObfuscateProvider.class, HttpLogFormatterProvider.class,
                 StrategyProvider.class, PredicateProvider.class, AttributeExtractorProvider.class, JsonMapperProvider.class,
-                LogbookProvider.class, QuarkusClientLogger.class);
+                LogbookProvider.class, QuarkusClientLogger.class, ConfigurationSections.class);
     }
 }
