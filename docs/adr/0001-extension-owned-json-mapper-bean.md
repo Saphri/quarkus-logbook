@@ -1,0 +1,5 @@
+# Extension-owned Jackson 3 JSON mapper bean
+
+Logbook 4.x is built on Jackson 3 (`tools.jackson.*`) and its JSON formatter and JWT extractors take a Jackson 3 `JsonMapper`, but this extension targets Quarkus 3.40.x LTS, whose DI only offers the Jackson 2 `ObjectMapper` bean via quarkus-jackson — Jackson 3 only enters the framework with Quarkus 4.x (still beta). We therefore declare a direct `tools.jackson.core:jackson-databind` 3.2.2 dependency and let the extension provide its own `JsonMapper` provider bean (`JsonMapperProvider`, `@DefaultBean`) instead of waiting for the framework. Rejected: bumping to Quarkus 4.0.0.Beta1 (an LTS-targeted extension must not chase a beta), and keeping the injected Jackson 2 `ObjectMapper` (the 4.x API no longer accepts it).
+
+Consequences: `com.fasterxml.jackson.core:jackson-annotations` is pinned to 2.22 in the root POM because Jackson 3 databind introspects Jackson 2 annotations (`JsonApplyView`) at runtime, and quarkus-bom's 2.21 pin lacks it. When Quarkus 4.x eventually provides a `JsonMapper` DI bean, the `@DefaultBean` marker means our provider backs off automatically and can then be dropped.
