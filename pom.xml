@@ -31,7 +31,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.version>3.40.1.1</quarkus.version>
-        <logbook.version>3.12.3</logbook.version>
+        <logbook.version>4.2.0</logbook.version>
+        <jackson3.version>3.2.2</jackson3.version>
+        <jackson2.version>2.22</jackson2.version>
         <assertj.version>3.27.7</assertj.version>
     </properties>
 
@@ -56,6 +58,13 @@
                 <version>${logbook.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- Jackson 2 annotations must match the version Logbook 4.2.0 is built against,
+                 because Jackson 3 databind introspects Jackson 2 annotations at runtime. -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

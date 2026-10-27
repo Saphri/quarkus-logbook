@@ -8,10 +8,9 @@ import org.zalando.logbook.core.DefaultHttpLogFormatter;
 import org.zalando.logbook.core.SplunkHttpLogFormatter;
 import org.zalando.logbook.json.JsonHttpLogFormatter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
 import io.quarkus.arc.DefaultBean;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * HttpLogFormatterProvider is a CDI provider that provides an {@link HttpLogFormatter} bean.
@@ -24,17 +23,17 @@ public class HttpLogFormatterProvider {
      * Creates and configures an {@link HttpLogFormatter} bean based on the application's configuration.
      *
      * @param logbookConfiguration the Logbook configuration.
-     * @param objectMapper the Jackson object mapper, used for the JSON formatter.
+     * @param jsonMapper the Jackson 3 JSON mapper, used for the JSON formatter.
      * @return a configured {@link HttpLogFormatter} instance.
      * @throws IllegalArgumentException if the configured style is unknown.
      */
     @ApplicationScoped
     @DefaultBean
-    public HttpLogFormatter format(final LogbookConfiguration logbookConfiguration, final ObjectMapper objectMapper) {
+    public HttpLogFormatter format(final LogbookConfiguration logbookConfiguration, final JsonMapper jsonMapper) {
         final var formatConfiguration = logbookConfiguration.format();
         switch (formatConfiguration.style()) {
             case "json":
-                return new JsonHttpLogFormatter(objectMapper);
+                return new JsonHttpLogFormatter(jsonMapper);
             case "http":
                 return new DefaultHttpLogFormatter();
             case "curl":

@@ -18,9 +18,8 @@ import org.zalando.logbook.core.attributes.CompositeAttributeExtractor;
 import org.zalando.logbook.core.attributes.JwtAllMatchingClaimsExtractor;
 import org.zalando.logbook.core.attributes.JwtFirstMatchingClaimExtractor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.quarkiverse.logbook.runtime.configuration.LogbookConfiguration;
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockitoExtension.class)
 class AttributeExtractorProviderTest {
@@ -34,13 +33,13 @@ class AttributeExtractorProviderTest {
     @Mock
     private LogbookConfiguration.AttributeExtractorConfiguration secondExtractorConfig;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private JsonMapper jsonMapper = JsonMapper.builder().build();
 
     private AttributeExtractorProvider provider;
 
     @BeforeEach
     void setUp() {
-        provider = new AttributeExtractorProvider(logbookConfiguration, objectMapper);
+        provider = new AttributeExtractorProvider(logbookConfiguration, jsonMapper);
     }
 
     @Test
