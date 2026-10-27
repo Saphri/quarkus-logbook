@@ -55,9 +55,9 @@ class LogbookTest {
                         .noneMatch(entry -> entry.getKey().equals("quarkus.rest-client.logging.scope")
                                 && !entry.getValue().equals("request-response")),
                         "The REST client logging scope must only default to request-response");
-                final var assertions = "logbook build item assertions";
+                final var content = "logbook build item assertions";
                 context.produce(new GeneratedResourceBuildItem(
-                        "META-INF/io.quarkiverse.logbook.build-item-assertions.txt", assertions.getBytes()));
+                        "META-INF/io.quarkiverse.logbook.build-item-assertions.txt", content.getBytes()));
             })
                     .consumes(AdditionalIndexedClassesBuildItem.class)
                     .consumes(FeatureBuildItem.class)
