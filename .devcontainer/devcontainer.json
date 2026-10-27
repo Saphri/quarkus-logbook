@@ -3,11 +3,11 @@
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
-      "version": "22.3.5.r17",
+      "version": "25.0.2.r25",
       "jdkDistro": "mandrel",
       "installMaven": "true"
     },
-    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/node:2.1.1": {},
     "ghcr.io/devcontainers-extra/features/quarkus-sdkman:2": {
       "jdkVersion": "none"
     }
