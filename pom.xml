@@ -33,7 +33,7 @@
         <quarkus.version>3.40.1.1</quarkus.version>
         <logbook.version>4.2.0</logbook.version>
         <jackson3.version>3.3.0</jackson3.version>
-        <jackson2.version>2.22</jackson2.version>
+        <jackson2.version>2.23</jackson2.version>
         <assertj.version>3.27.7</assertj.version>
     </properties>
 
