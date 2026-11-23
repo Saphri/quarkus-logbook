@@ -12,6 +12,11 @@ updates:
       interval: "daily"
     assignees:
       - "Saphri"
+    # Stay on Quarkus 3.x until the extension is explicitly migrated to Quarkus 4.
+    ignore:
+      - dependency-name: "io.quarkus:*"
+        versions:
+          - "4.x"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
