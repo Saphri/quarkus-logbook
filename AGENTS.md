@@ -1,10 +1,10 @@
-# Copilot instructions
+# Agent instructions
 
 ## Build and test
 
-This is a Maven project targeting Java 17. Use the Maven wrapper:
+This is a Maven project targeting Java 17 (Quarkiverse parent, Quarkus 3.x). Use the Maven wrapper:
 
-- Full build and test suite, including the docs and integration-test modules: `./mvnw clean install`
+- Full build and test suite (`runtime`, `deployment`, `integration-tests`): `./mvnw clean install`
 - The CI build uses `./mvnw -B clean install -Dno-format`.
 - Run runtime unit tests: `./mvnw -pl runtime test`
 - Run one runtime test class: `./mvnw -pl runtime -Dtest=ObfuscateProviderTest test`
@@ -12,11 +12,11 @@ This is a Maven project targeting Java 17. Use the Maven wrapper:
 - Run the integration-test module's Surefire test class: `./mvnw -pl integration-tests -am -Dtest=LogbookResourceTest -Dsurefire.failIfNoSpecifiedTests=false test`
 - Run the Failsafe integration test: `./mvnw -pl integration-tests -am -DskipITs=false -Dit.test=LogbookResourceIT verify`
 
-The `integration-tests` module skips Failsafe tests by default. `LogbookResourceTest` runs with `@QuarkusTest`; `LogbookResourceIT` runs the same tests against the built application with `@QuarkusIntegrationTest`. There is no separate repository lint command; the CI workflow is `.github/workflows/build.yml`.
+The `integration-tests` module sets `skipITs=true` by default; Failsafe ITs only run when the `native-image` profile is active (`-Dnative`) or you pass `-DskipITs=false`. `LogbookResourceTest` runs with `@QuarkusTest`; `LogbookResourceIT` extends it and runs against the built application with `@QuarkusIntegrationTest`. There is no separate repository lint command; the CI workflow is `.github/workflows/build.yml`, which also runs a GraalVM native build (`./mvnw -B install -Dnative -Dquarkus.native.container-build -Dnative.surefire.skip`) — changes that break native image (reflection, resource loading) fail in CI even when JVM tests pass.
 
 ## Architecture
 
-The root POM builds the Quarkus extension from two core modules: `runtime` holds the runtime configuration and CDI providers, and `deployment` provides Quarkus build steps. The `integration-tests` module is added by a default Maven profile.
+The root POM builds the Quarkus extension from two core modules: `runtime` holds the runtime configuration and CDI providers, and `deployment` provides Quarkus build steps; `integration-tests` exercises a real Quarkus app.
 
 At build time, `LogbookExtensionProcessor` registers the runtime providers and supporting classes as CDI beans, indexes Logbook types, and sets Quarkus logging and REST-client defaults. At runtime, `LogbookConfiguration` maps `quarkus.logbook.*` properties; provider classes create the strategy, filters, formatters, predicates, and attribute extractors. `LogbookProvider` assembles those components into the `Logbook` instance and default sink/writer. Most provider beans use `@DefaultBean`, so applications can replace them with custom CDI beans.
 
@@ -24,9 +24,10 @@ At build time, `LogbookExtensionProcessor` registers the runtime providers and s
 
 ## Repository-specific conventions
 
-- Configuration is runtime-phase SmallRye Config mapping in `runtime/.../configuration/LogbookConfiguration.java`. Add user-facing settings beneath the `quarkus.logbook` prefix and document their meaning in mapping Javadocs;
+- Configuration is runtime-phase SmallRye Config mapping in `runtime/.../configuration/LogbookConfiguration.java`. Add user-facing settings beneath the `quarkus.logbook` prefix and document their meaning in mapping Javadocs.
 - Keep configurable behavior in the provider classes and wire new extension-owned CDI beans through `LogbookExtensionProcessor`. Use `@DefaultBean` for defaults intended to be replaceable by application beans.
-- Preserve filter composition and precedence semantics: custom filters participate in the assembled Logbook, configured exclusion predicates take precedence over inclusion predicates, and body truncation runs after other body filters.
+- Preserve filter composition and precedence semantics: custom filters participate in the assembled Logbook, configured exclusion predicates take precedence over inclusion predicates (`PredicateProvider`), and body truncation is appended last so it runs after other body filters (`LogbookProvider`).
+- Entries are written at `TRACE` under the `org.zalando.logbook` logger category; a built (non-dev) app only emits them if that category's minimum level is lowered at build time. See README "Logging levels in a built application" and ADR 0002 — do not try to make the extension set these itself.
 - Runtime unit tests use JUnit 5, Mockito, and AssertJ. Extension boot tests use `QuarkusExtensionTest`; end-to-end HTTP tests use RestAssured with `@QuarkusTest` or `@QuarkusIntegrationTest`.
 
 ## Agent skills
@@ -41,4 +42,4 @@ Default vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-
 
 ### Domain docs
 
-Single-context layout: `GLOSSARY.md` at the repo root plus `docs/adr/`. See `docs/agents/domain.md`.
+Single-context layout: `GLOSSARY.md` at the repo root plus `docs/adr/`. Use the glossary's vocabulary and flag ADR conflicts explicitly. See `docs/agents/domain.md`.
