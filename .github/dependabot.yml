@@ -15,8 +15,7 @@ updates:
     # Stay on Quarkus 3.x until the extension is explicitly migrated to Quarkus 4.
     ignore:
       - dependency-name: "io.quarkus:*"
-        versions:
-          - "4.x"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
